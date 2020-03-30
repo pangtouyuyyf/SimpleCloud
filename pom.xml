@@ -60,6 +60,7 @@
 
     <modules>
         <module>SimpleAuth</module>
+        <module>SimpleGame</module>
         <module>SimpleGateway</module>
         <module>SimpleWeb</module>
     </modules>
