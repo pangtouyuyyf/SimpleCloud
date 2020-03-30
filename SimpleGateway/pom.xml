@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>simple-gateway</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>SimpleGateway</name>
     <description>Gateway project for Spring Boot</description>
 

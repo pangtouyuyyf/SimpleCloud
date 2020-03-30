@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>simple-auth</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>SimpleAuth</name>
     <description>Auth project for Spring Boot</description>
 

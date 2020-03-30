@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>simple-web</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>SimpleWeb</name>
     <description>Web project for Spring Boot</description>
 
