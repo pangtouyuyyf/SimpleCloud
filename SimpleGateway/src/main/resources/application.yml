@@ -16,8 +16,6 @@ spring:
         group: DEV_GATE
         # nacos配置发现地址
         server-addr: 127.0.0.1:8848
-        # 自动注册
-        refresh-enabled: true
         # 对应命名空间id
         namespace: 6d17dfa1-5036-4de1-a680-c5d0bcee1a04
         # 文件格式
@@ -27,7 +25,5 @@ spring:
         group: DEV_GATE
         # nacos服务发现地址
         server-addr: 127.0.0.1:8848
-        # 自动注册
-        register-enabled: true
         # 对应命名空间id
         namespace: 6d17dfa1-5036-4de1-a680-c5d0bcee1a04
