@@ -1,3 +1,11 @@
+# server
+server:
+  port: 8080
+  servlet:
+    context-path: /simple/web
+  tomcat:
+    uri-encoding: UTF-8
+
 #spring
 spring:
   application:
