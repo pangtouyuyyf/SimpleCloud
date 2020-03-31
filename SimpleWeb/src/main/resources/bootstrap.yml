@@ -20,3 +20,10 @@ spring:
         server-addr: 127.0.0.1:8848
         # 对应命名空间id
         namespace: 6d17dfa1-5036-4de1-a680-c5d0bcee1a04
+
+# feign 默认okhttp的client
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
