@@ -14,8 +14,8 @@ spring:
         # 文件格式
         file-extension: yaml
       discovery:
-        # 分组名称
-        group: DEV_GATE
+        # 分组名称 (服务必须在相同分组才能被发现)
+        group: DEV_CLOUD
         # nacos服务发现地址
         server-addr: 127.0.0.1:8848
         # 对应命名空间id
