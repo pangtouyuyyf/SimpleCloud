@@ -1,7 +1,7 @@
 #spring
 spring:
   application:
-    name: SimpleGate
+    name: simple-gate
   cloud:
     nacos:
       config:

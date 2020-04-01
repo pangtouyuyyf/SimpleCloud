@@ -1,7 +1,7 @@
 #spring
 spring:
   application:
-    name: SimpleGame
+    name: simple-game
   cloud:
     nacos:
       config:

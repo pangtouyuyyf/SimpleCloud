@@ -1,7 +1,7 @@
 #spring
 spring:
   application:
-    name: SimpleAuth
+    name: simple-auth
   cloud:
     nacos:
       config:
