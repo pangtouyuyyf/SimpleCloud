@@ -25,11 +25,11 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: SimpleAuth
-          uri: lb://SimpleAuth
+        - id: simple-auth
+          uri: lb://simple-auth
           predicates:
-            Path=/SimpleAuth/**
-        - id: SimpleGame
-          uri: lb://SimpleGame
+            Path=/simple-auth/**
+        - id: simple-game
+          uri: lb://simple-game
           predicates:
-            Path=/SimpleGame/**
+            Path=/simple-game/**
