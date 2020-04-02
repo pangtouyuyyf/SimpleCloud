@@ -8,6 +8,6 @@ import org.springframework.cloud.openfeign.FeignClient;
  * Author chen
  * CreateTime 2020-04-01 15:37
  **/
-@FeignClient(name = "simple-gate", fallback = AuthClientFallback.class)
+@FeignClient(name = "simple-gate", contextId = "AuthClient", fallback = AuthClientFallback.class)
 public interface AuthClient {
 }

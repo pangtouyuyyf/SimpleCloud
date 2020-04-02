@@ -8,6 +8,6 @@ import org.springframework.cloud.openfeign.FeignClient;
  * Author chen
  * CreateTime 2020-04-01 15:38
  **/
-@FeignClient(name = "simple-gate", fallback = GameClientFallback.class)
+@FeignClient(name = "simple-gate", contextId = "GameClient", fallback = GameClientFallback.class)
 public interface GameClient {
 }
