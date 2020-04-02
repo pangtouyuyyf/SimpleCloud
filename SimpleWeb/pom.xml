@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.simple</groupId>
-        <artifactId>SimpleCloud</artifactId>
+        <artifactId>simple-cloud</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-okhttp</artifactId>
-            <version>10.9</version>
+            <version>${feign-okhttp.version}</version>
         </dependency>
     </dependencies>
 

@@ -5,7 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.simple</groupId>
-    <artifactId>SimpleCloud</artifactId>
+    <artifactId>simple-cloud</artifactId>
+    <name>SimpleCloud</name>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -23,6 +24,7 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
+        <feign-okhttp.version>10.9</feign-okhttp.version>
     </properties>
 
     <dependencyManagement>
