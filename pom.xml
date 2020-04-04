@@ -25,6 +25,7 @@
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
         <feign-okhttp.version>10.9</feign-okhttp.version>
+        <lombok.version>1.18.12</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -65,5 +66,6 @@
         <module>SimpleGame</module>
         <module>SimpleGateway</module>
         <module>SimpleWeb</module>
+        <module>SimpleCommon</module>
     </modules>
 </project>
