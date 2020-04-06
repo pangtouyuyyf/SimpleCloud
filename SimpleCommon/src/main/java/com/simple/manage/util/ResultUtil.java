@@ -41,11 +41,8 @@ public class ResultUtil {
      * @return
      */
     public static Result success(String token, Object obj) {
-        Result result = new Result();
-        result.setCode(SysExpEnum.SUCCESS.getCode());
-        result.setMessage(SysExpEnum.SUCCESS.getMessage());
+        Result result = success(obj);
         result.setToken(token);
-        result.setData(obj);
         return result;
     }
 
