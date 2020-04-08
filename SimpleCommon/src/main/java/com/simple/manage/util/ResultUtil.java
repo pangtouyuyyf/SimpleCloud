@@ -13,20 +13,20 @@ public class ResultUtil {
     /**
      * 返回成功
      *
-     * @return
+     * @return result
      */
-    public static Result success() {
+    public static <T> Result<?> success() {
         return success(null);
     }
 
     /**
      * 返回成功(含参)
      *
-     * @param obj
-     * @return
+     * @param obj obj
+     * @return result
      */
-    public static Result success(Object obj) {
-        Result result = new Result();
+    public static <T> Result<?> success(T obj) {
+        Result<T> result = new Result<>();
         result.setCode(SysExpEnum.SUCCESS.getCode());
         result.setMessage(SysExpEnum.SUCCESS.getMessage());
         result.setData(obj);
@@ -36,12 +36,12 @@ public class ResultUtil {
     /**
      * 返回成功(含参,仅在登录操作下使用)
      *
-     * @param token
-     * @param obj
-     * @return
+     * @param token token
+     * @param obj   obj
+     * @return result
      */
-    public static Result success(String token, Object obj) {
-        Result result = success(obj);
+    public static <T> Result<?> success(String token, T obj) {
+        Result<?> result = success(obj);
         result.setToken(token);
         return result;
     }
@@ -49,10 +49,10 @@ public class ResultUtil {
     /**
      * 返回失败
      *
-     * @return
+     * @return result
      */
-    public static Result error() {
-        Result result = new Result();
+    public static <T> Result<?> error() {
+        Result<?> result = new Result<>();
         result.setCode(SysExpEnum.FAIL.getCode());
         result.setMessage(SysExpEnum.FAIL.getMessage());
         result.setData(null);
@@ -62,11 +62,11 @@ public class ResultUtil {
     /**
      * 返回失败(含参)
      *
-     * @param msg
-     * @return
+     * @param msg msg
+     * @return result
      */
-    public static Result error(String msg) {
-        Result result = new Result();
+    public static <T> Result<?> error(String msg) {
+        Result<?> result = new Result<>();
         result.setCode(SysExpEnum.FAIL.getCode());
         result.setMessage(msg);
         result.setData(null);
@@ -76,11 +76,11 @@ public class ResultUtil {
     /**
      * 返回失败(含参)
      *
-     * @param obj
-     * @return
+     * @param obj obj
+     * @return result
      */
-    public static Result error(Object obj) {
-        Result result = new Result();
+    public static <T> Result<?> error(T obj) {
+        Result<T> result = new Result<>();
         result.setCode(SysExpEnum.FAIL.getCode());
         result.setMessage(SysExpEnum.FAIL.getMessage());
         result.setData(obj);
@@ -90,12 +90,12 @@ public class ResultUtil {
     /**
      * 返回失败(含参)
      *
-     * @param msg
-     * @param obj
-     * @return
+     * @param msg msg
+     * @param obj obj
+     * @return result
      */
-    public static Result error(String msg, Object obj) {
-        Result result = new Result();
+    public static <T> Result<?> error(String msg, T obj) {
+        Result<T> result = new Result<>();
         result.setCode(SysExpEnum.FAIL.getCode());
         result.setMessage(msg);
         result.setData(obj);
@@ -105,11 +105,11 @@ public class ResultUtil {
     /**
      * 返回失败(含参)
      *
-     * @param sysExpEnum
-     * @return
+     * @param sysExpEnum enum
+     * @return result
      */
-    public static Result error(SysExpEnum sysExpEnum) {
-        Result result = new Result();
+    public static <T> Result<?> error(SysExpEnum sysExpEnum) {
+        Result<?> result = new Result<>();
         result.setCode(sysExpEnum.getCode());
         result.setMessage(sysExpEnum.getMessage());
         result.setData(null);
@@ -119,13 +119,13 @@ public class ResultUtil {
     /**
      * 自定义提示返回结果(含参)
      *
-     * @param code
-     * @param msg
-     * @param data
-     * @return
+     * @param code code
+     * @param msg  msg
+     * @param data data
+     * @return result
      */
-    public static Result message(int code, String msg, Object data) {
-        Result result = new Result();
+    public static <T> Result<?> message(int code, String msg, T data) {
+        Result<T> result = new Result<>();
         result.setCode(code);
         result.setMessage(msg);
         result.setData(data);
