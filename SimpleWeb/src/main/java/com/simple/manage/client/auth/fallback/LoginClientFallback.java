@@ -1,6 +1,6 @@
 package com.simple.manage.client.auth.fallback;
 
-import com.simple.manage.client.auth.AuthClient;
+import com.simple.manage.client.auth.LoginClient;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Component;
  * CreateTime 2020-04-01 15:40
  **/
 @Component
-public class AuthClientFallback implements AuthClient {
+public class LoginClientFallback implements LoginClient {
 }

@@ -1,6 +1,6 @@
 package com.simple.manage.client.auth;
 
-import com.simple.manage.client.auth.fallback.AuthClientFallback;
+import com.simple.manage.client.auth.fallback.LoginClientFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 
 /**
@@ -8,6 +8,6 @@ import org.springframework.cloud.openfeign.FeignClient;
  * Author chen
  * CreateTime 2020-04-01 15:37
  **/
-@FeignClient(name = "simple-gate", contextId = "AuthClient", fallback = AuthClientFallback.class)
-public interface AuthClient {
+@FeignClient(name = "simple-gate", contextId = "AuthClient", fallback = LoginClientFallback.class)
+public interface LoginClient {
 }
