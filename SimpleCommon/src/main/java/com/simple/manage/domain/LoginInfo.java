@@ -1,6 +1,5 @@
 package com.simple.manage.domain;
 
-import com.simple.manage.entity.User;
 import lombok.Data;
 
 import java.util.List;
