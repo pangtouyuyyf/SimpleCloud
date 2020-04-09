@@ -23,7 +23,7 @@ public class LoginController extends WebController {
     @GetMapping("/login")
     public Result<?> login(@RequestParam("name") String loginName,
                            @RequestParam("pwd") String password,
-                           @RequestParam("channel") String channel) throws Exception{
+                           @RequestParam("channel") String channel) {
         return loginClient.login(loginName, password, channel);
     }
 }
