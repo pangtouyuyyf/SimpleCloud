@@ -75,8 +75,8 @@ public class CommonUtil {
     /**
      * url处理(去掉url参数)
      *
-     * @param url
-     * @return
+     * @param url url
+     * @return string
      */
     public static String urlHandler(String url) {
         if (StringUtils.isNoneEmpty(url)) {
