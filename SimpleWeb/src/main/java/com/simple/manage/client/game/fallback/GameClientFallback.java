@@ -1,6 +1,6 @@
-package com.simple.manage.client.fallback;
+package com.simple.manage.client.game.fallback;
 
-import com.simple.manage.client.GameClient;
+import com.simple.manage.client.game.GameClient;
 import org.springframework.stereotype.Component;
 
 /**

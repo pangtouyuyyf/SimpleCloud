@@ -1,6 +1,6 @@
-package com.simple.manage.client;
+package com.simple.manage.client.auth;
 
-import com.simple.manage.client.fallback.AuthClientFallback;
+import com.simple.manage.client.auth.fallback.AuthClientFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 
 /**

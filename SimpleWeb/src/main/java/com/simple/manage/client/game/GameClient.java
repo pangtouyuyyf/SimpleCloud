@@ -1,6 +1,6 @@
-package com.simple.manage.client;
+package com.simple.manage.client.game;
 
-import com.simple.manage.client.fallback.GameClientFallback;
+import com.simple.manage.client.game.fallback.GameClientFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 
 /**
