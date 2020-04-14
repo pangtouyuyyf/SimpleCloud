@@ -13,8 +13,8 @@ public class LogUtil {
     /**
      * 错误
      *
-     * @param clazz
-     * @param message
+     * @param clazz   clazz
+     * @param message msg
      */
     public static void error(Class<?> clazz, String message) {
         Logger logger = LoggerFactory.getLogger(clazz);
@@ -26,8 +26,8 @@ public class LogUtil {
     /**
      * 警告
      *
-     * @param clazz
-     * @param message
+     * @param clazz   clazz
+     * @param message msg
      */
     public static void warn(Class<?> clazz, String message) {
         Logger logger = LoggerFactory.getLogger(clazz);
@@ -39,8 +39,8 @@ public class LogUtil {
     /**
      * 提示
      *
-     * @param clazz
-     * @param message
+     * @param clazz   clazz
+     * @param message msg
      */
     public static void info(Class<?> clazz, String message) {
         Logger logger = LoggerFactory.getLogger(clazz);
