@@ -25,10 +25,10 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest originalRequest = exchange.getRequest();
         URI originalRequestUrl = originalRequest.getURI();
-        System.out.println("from:");
-        System.out.println(originalRequestUrl.getHost());
-        System.out.println("to:");
-        System.out.println(originalRequestUrl.getPath());
+        System.out.print("from:");
+        System.out.print(originalRequestUrl.getHost());
+        System.out.print(" >> to:");
+        System.out.print(originalRequestUrl.getPath());
         return chain.filter(exchange);
     }
 
