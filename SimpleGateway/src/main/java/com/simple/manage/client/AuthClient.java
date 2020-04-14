@@ -16,4 +16,7 @@ public interface AuthClient {
     @GetMapping("sys/login")
     Result<?> login(@RequestParam("name") String name, @RequestParam("pwd") String pwd,
                     @RequestParam("channel") String channel);
+
+    @GetMapping("user/checkOne")
+    Result<?> checkOne();
 }
