@@ -74,7 +74,6 @@
         <module>SimpleAuth</module>
         <module>SimpleGame</module>
         <module>SimpleGateway</module>
-        <module>SimpleWeb</module>
         <module>SimpleCommon</module>
     </modules>
 </project>
