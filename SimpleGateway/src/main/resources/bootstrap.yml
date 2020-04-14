@@ -39,3 +39,12 @@ spring:
           args:
             name: fallbackcmd
             fallbackUri: forward:/gate/fallback
+
+# feign 默认okhttp的client
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  sentinel:
+    enabled: true
