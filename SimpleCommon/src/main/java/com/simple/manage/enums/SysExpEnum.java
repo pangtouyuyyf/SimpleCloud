@@ -9,6 +9,8 @@ package com.simple.manage.enums;
 public enum SysExpEnum {
     COMMON_ERROR(-1, "未知异常"),    //系统异常
 
+    CONNECT_OR_OVERTIME_ERROR(-1, "服务连接异常或超时"),    //服务连接异常或超时
+
     SUCCESS(0, "success"),    //请求处理成功
 
     FAIL(1, "failed"),    //请求处理失败
