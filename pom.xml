@@ -29,6 +29,7 @@
         <slf4j.version>1.7.30</slf4j.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <logstash-logback.version>6.3</logstash-logback.version>
+        <java-jwt.version>3.10.2</java-jwt.version>
     </properties>
 
     <dependencyManagement>
