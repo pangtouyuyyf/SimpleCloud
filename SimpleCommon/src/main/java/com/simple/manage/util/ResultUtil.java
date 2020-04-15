@@ -131,4 +131,14 @@ public class ResultUtil {
         result.setData(data);
         return result;
     }
+
+    /**
+     * 判断是否是成功返回
+     *
+     * @param result result
+     * @return boolean
+     */
+    public static boolean isSuccess(Result<?> result) {
+        return SysExpEnum.SUCCESS.getCode() == result.getCode();
+    }
 }
