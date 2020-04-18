@@ -1,5 +1,8 @@
 package com.simple.manage.domain;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.simple.manage.util.LogUtil;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -21,4 +24,16 @@ public class Result<T> implements Serializable {
     private String token;  //令牌
 
     private T data;  //具体内容：泛型
+
+    @Override
+    public String toString() {
+        String result = null;
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            result = mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            LogUtil.error(Result.class, "result 转化失败");
+        }
+        return result;
+    }
 }
