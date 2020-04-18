@@ -74,6 +74,7 @@
 
     <modules>
         <module>SimpleAuth</module>
+        <module>SimpleBase</module>
         <module>SimpleGame</module>
         <module>SimpleGateway</module>
         <module>SimpleCommon</module>
