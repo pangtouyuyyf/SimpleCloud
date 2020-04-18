@@ -1,10 +1,12 @@
 package com.simple.manage.filter;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.simple.manage.domain.Result;
 import com.simple.manage.enums.SysExpEnum;
 import com.simple.manage.util.CommonUtil;
 import com.simple.manage.util.JwtUtil;
 import com.simple.manage.util.LogUtil;
-import com.simple.manage.util.ResultUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +34,7 @@ import java.util.Map;
  * CreateTime 2020-04-02 9:03
  **/
 @Component
-public class HttpTraceGlobalFilter implements GlobalFilter, Ordered{
+public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
     private Logger logger = LoggerFactory.getLogger(HttpTraceGlobalFilter.class);
 
     @Override
@@ -41,26 +43,14 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered{
         ServerHttpResponse response = exchange.getResponse();
         DataBuffer dataBuffer = null;
 
-        String token =  request.getHeaders().getFirst(CommonUtil.TOKEN);
+        String token = request.getHeaders().getFirst(CommonUtil.TOKEN);
         Map<String, String> jwtMap = JwtUtil.parseJWT(token);
 
         /** 验证令牌合法性 **/
         if (jwtMap == null) {
             LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌验证失败");
             response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-//            DataBufferFactory dataBufferFactory = response.bufferFactory();
-//            ObjectMapper objMapper = new ObjectMapper();
-//            byte[] obj;
-//            try {
-//                obj = objMapper.writeValueAsBytes(response);
-//                return exchange.getResponse().writeWith(Mono.just(obj).map(r -> dataBufferFactory.wrap(r)));
-//            } catch (JsonProcessingException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            }
-//            obj = objMapper.writeValueAsBytes(response);
-//            return exchange.getResponse().writeWith(Mono.just(ResultUtil.error(SysExpEnum.NEED_LOGIN)).map(r -> dataBufferFactory.wrap(r)));
-            dataBuffer = response.bufferFactory().wrap(ResultUtil.error(SysExpEnum.NEED_LOGIN).toString().getBytes());
+            dataBuffer = response.bufferFactory().wrap(getErrorResult(Result.error(SysExpEnum.NEED_LOGIN)).getBytes());
             return response.writeWith(Mono.just(dataBuffer));
         }
 
@@ -74,7 +64,7 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered{
                 || !(CommonUtil.CHANNEL_WEB.equals(channel) || CommonUtil.CHANNEL_APP.equals(channel))) {
             LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌参数有误");
             response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-            dataBuffer = response.bufferFactory().wrap(ResultUtil.error(SysExpEnum.NEED_LOGIN).toString().getBytes());
+            dataBuffer = response.bufferFactory().wrap(getErrorResult(Result.error(SysExpEnum.NEED_LOGIN)).getBytes());
             return response.writeWith(Mono.just(dataBuffer));
         }
 
@@ -82,7 +72,6 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered{
         List<String> tokenKeyParts = Arrays.asList(CommonUtil.TOKEN_PREFIX, userId, channel);
         String tokenRedisKey = String.join(CommonUtil.UNDERLINE, tokenKeyParts);
 //        String tokenRedis = this.redisOperation.getStr(tokenRedisKey);
-
 
 
         URI originalRequestUrl = request.getURI();
@@ -96,5 +85,22 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered{
     @Override
     public int getOrder() {
         return -10;
+    }
+
+    /**
+     * 获取异常结果
+     *
+     * @param r r
+     * @return string
+     */
+    private String getErrorResult(Result r) {
+        String result = null;
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            result = mapper.writeValueAsString(r);
+        } catch (JsonProcessingException e) {
+            LogUtil.error(HttpTraceGlobalFilter.class, "返回结果转化失败");
+        }
+        return result;
     }
 }
