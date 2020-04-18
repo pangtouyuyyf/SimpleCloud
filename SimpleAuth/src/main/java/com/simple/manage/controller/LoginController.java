@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Description 登录controller
  * Author chen
@@ -19,6 +22,7 @@ public class LoginController extends BaseController {
                            @RequestParam("pwd") String password,
                            @RequestParam("channel") String channel) {
         System.out.println(loginName + ">>" + password + ">>" + channel);
-        return success();
+        List<String> list = Arrays.asList(loginName, password, channel);
+        return success(list);
     }
 }

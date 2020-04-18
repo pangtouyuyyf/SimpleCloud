@@ -3,7 +3,6 @@ package com.simple.manage.controller;
 import com.simple.manage.aspect.RequestLoginContextHolder;
 import com.simple.manage.domain.LoginInfo;
 import com.simple.manage.domain.Result;
-import com.simple.manage.util.ResultUtil;
 
 /**
  * Description 基础controller
@@ -18,7 +17,7 @@ public class BaseController {
      * @return result
      */
     public Result<?> success() {
-        return ResultUtil.success();
+        return Result.success();
     }
 
     /**
@@ -28,7 +27,7 @@ public class BaseController {
      * @return result
      */
     public <T> Result<?> success(T obj) {
-        return ResultUtil.success(obj);
+        return Result.success(obj);
     }
 
     /**
@@ -39,7 +38,7 @@ public class BaseController {
      * @return result
      */
     public <T> Result<?> success(String token, T obj) {
-        return ResultUtil.success(token, obj);
+        return Result.success(token, obj);
     }
 
     /**
@@ -48,7 +47,7 @@ public class BaseController {
      * @return result
      */
     public Result<?> fail() {
-        return ResultUtil.error();
+        return Result.error();
     }
 
     /**
@@ -58,7 +57,7 @@ public class BaseController {
      * @return result
      */
     public Result<?> fail(String msg) {
-        return ResultUtil.error(msg);
+        return Result.error(msg);
     }
 
 
@@ -69,7 +68,7 @@ public class BaseController {
      * @return result
      */
     public <T> Result<?> fail(T obj) {
-        return ResultUtil.error(obj);
+        return Result.error(obj);
     }
 
     /**
@@ -80,7 +79,7 @@ public class BaseController {
      * @return result
      */
     public <T> Result<?> fail(String msg, T obj) {
-        return ResultUtil.error(msg, obj);
+        return Result.error(msg, obj);
     }
 
 
@@ -93,7 +92,7 @@ public class BaseController {
      * @return result
      */
     public <T> Result<?> message(int code, String msg, T data) {
-        return ResultUtil.message(code, msg, data);
+        return Result.message(code, msg, data);
     }
 
     /**
