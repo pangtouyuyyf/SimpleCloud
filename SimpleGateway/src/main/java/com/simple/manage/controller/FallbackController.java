@@ -2,7 +2,6 @@ package com.simple.manage.controller;
 
 import com.simple.manage.domain.Result;
 import com.simple.manage.enums.SysExpEnum;
-import com.simple.manage.util.ResultUtil;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -15,16 +14,16 @@ import org.springframework.web.bind.annotation.*;
 public class FallbackController {
     @GetMapping("/fallback")
     public Result<?> getFallback() {
-        return ResultUtil.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR);
+        return Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR);
     }
 
     @PostMapping("/fallback")
     public Result<?> postFallback() {
-        return ResultUtil.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR);
+        return Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR);
     }
 
     @DeleteMapping("/fallback")
     public Result<?> delFallback() {
-        return ResultUtil.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR);
+        return Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR);
     }
 }
