@@ -35,7 +35,7 @@ public class RedisOperation {
      * String类型存入redis
      *
      * @param key   key
-     * @param value
+     * @param value value
      */
     public void setStr(String key, String value) {
         stringRedisTemplate.opsForValue().set(key, value);
@@ -45,7 +45,7 @@ public class RedisOperation {
      * String类型存入redis并设置有效期
      *
      * @param key   key
-     * @param value
+     * @param value value
      */
     public void setStr(String key, String value, long time) {
         setStr(key, value);
@@ -72,7 +72,7 @@ public class RedisOperation {
      * 获取过期剩余时间
      *
      * @param key key
-     * @return
+     * @return long
      */
     public long getStrExpire(String key) {
         return stringRedisTemplate.getExpire(key, TimeUnit.SECONDS);
@@ -82,7 +82,7 @@ public class RedisOperation {
      * 从redis中取出对象信息
      *
      * @param key key
-     * @return
+     * @return obj
      */
     public Object getObj(String key) {
         return redisTemplate.opsForValue().get(key);
@@ -92,7 +92,7 @@ public class RedisOperation {
      * 将对象信息放入redis
      *
      * @param key key
-     * @param obj
+     * @param obj obj
      */
     public void setObj(String key, Object obj) {
         redisTemplate.opsForValue().set(key, obj);
@@ -102,7 +102,7 @@ public class RedisOperation {
      * 将对象信息放入redis并设置有效期
      *
      * @param key key
-     * @param obj
+     * @param obj obj
      */
     public void setObj(String key, Object obj, long time) {
         setObj(key, obj);
@@ -115,7 +115,7 @@ public class RedisOperation {
      *
      * @param key  键
      * @param time 时间(秒)
-     * @return
+     * @return boolean
      */
     public boolean expireObj(String key, long time) {
         if (time > 0) {
@@ -130,7 +130,7 @@ public class RedisOperation {
      * 获取过期剩余时间
      *
      * @param key key
-     * @return
+     * @return long
      */
     public long getObjExpire(String key) {
         return redisTemplate.getExpire(key, TimeUnit.SECONDS);
@@ -160,8 +160,7 @@ public class RedisOperation {
      * @param regex regex
      */
     public void deleteBatch(String regex) {
-        String realKey = (regex);
-        Set<String> keys = redisTemplate.keys(realKey);
+        Set<String> keys = redisTemplate.keys(regex);
         redisTemplate.delete(keys);
     }
 }
