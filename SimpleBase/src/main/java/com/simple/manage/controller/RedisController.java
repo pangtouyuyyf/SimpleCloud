@@ -2,10 +2,8 @@ package com.simple.manage.controller;
 
 import com.simple.manage.component.RedisOperation;
 import com.simple.manage.domain.Result;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.simple.manage.domain.Token;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -20,15 +18,30 @@ public class RedisController {
     @Resource
     private RedisOperation redisOperation;
 
+    /**
+     * 获取token
+     *
+     * @param key
+     * @return
+     */
     @GetMapping("/getToken")
     public Result<?> getToken(@RequestParam("key") String key) {
-        String token = redisOperation.getStr(key);
+        String value = redisOperation.getStr(key);
+        long time = redisOperation.getStrExpire(key);
+        Token token = new Token(key, value, time);
         return Result.success(token);
     }
 
-    @GetMapping("/setStr")
-    public Result<?> setStr(@RequestParam("key") String key, @RequestParam("value") String value, @RequestParam("time") Long time) {
-        redisOperation.setStr(key, value, time);
+    /**
+     * 刷新token有效时间
+     *
+     * @param key
+     * @param time
+     * @return
+     */
+    @PostMapping("/renewToken")
+    public Result<?> renewToken(@RequestParam("key") String key, @RequestParam("time") Integer time) {
+        redisOperation.expireStr(key, time);
         return Result.success();
     }
 }
