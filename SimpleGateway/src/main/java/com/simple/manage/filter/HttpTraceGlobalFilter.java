@@ -105,7 +105,6 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
             if (CommonUtil.CHANNEL_WEB.equals(channel)) {
                 if (time < JwtConfig.WEB_UPDATE_INTERVAL) {
                     r = baseClient.renewToken(tokenRedisKey, JwtConfig.WEB_LIFE_CYCLE);
-
                 }
             } else {
                 if (time < JwtConfig.APP_UPDATE_INTERVAL) {
@@ -127,7 +126,7 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return -10;
+        return Ordered.HIGHEST_PRECEDENCE;
     }
 
     /**
