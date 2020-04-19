@@ -18,5 +18,5 @@ public interface BaseClient {
     Result<?> getToken(@RequestParam("key") String key);
 
     @PostMapping("redis/renewToken")
-    Result<?> renewToken(@RequestParam("key") String key, @RequestParam("time") Long time);
+    Result<?> renewToken(@RequestParam("key") String key, @RequestParam("time") Integer time);
 }

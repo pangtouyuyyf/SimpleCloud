@@ -19,7 +19,7 @@ public class BaseClientFallback implements BaseClient {
         return Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR);
     }
 
-    public Result<?> renewToken(String key, Long time) {
+    public Result<?> renewToken(String key, Integer time) {
         LogUtil.error(AuthClientFallback.class, SERVICE_NAME_MSG + "redis/renewToken接口连接异常!");
         return Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR);
     }
