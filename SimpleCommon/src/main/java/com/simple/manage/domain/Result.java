@@ -148,10 +148,9 @@ public class Result<T> implements Serializable {
     /**
      * 判断是否是成功返回
      *
-     * @param result result
      * @return boolean
      */
-    public static boolean isSuccess(Result<?> result) {
-        return SysExpEnum.SUCCESS.getCode() == result.getCode();
+    public boolean isSuccess() {
+        return code == SysExpEnum.SUCCESS.getCode();
     }
 }
