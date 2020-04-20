@@ -48,8 +48,6 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
         String token = request.getHeaders().getFirst(CommonUtil.TOKEN);
         Map<String, String> jwtMap = JwtUtil.parseJWT(token);
 
-        Result r = null;
-
         /** 验证令牌合法性 **/
         if (jwtMap == null) {
             LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌验证失败");
@@ -68,6 +66,8 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
             return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.NEED_LOGIN)));
 
         }
+
+        Result r = null;
 
         /** 获取服务器缓存令牌 **/
         List<String> tokenKeyParts = Arrays.asList(CommonUtil.TOKEN_PREFIX, userId, channel);
