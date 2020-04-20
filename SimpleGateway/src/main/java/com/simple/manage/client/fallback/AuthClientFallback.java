@@ -4,13 +4,14 @@ import com.simple.manage.client.AuthClient;
 import com.simple.manage.domain.Result;
 import com.simple.manage.enums.SysExpEnum;
 import com.simple.manage.util.LogUtil;
+import org.springframework.stereotype.Component;
 
 /**
  * Description 权限服务请求熔断处理
  * Author chen
  * CreateTime 2020-04-14 19:25
  **/
-
+@Component
 public class AuthClientFallback implements AuthClient {
     private static final String SERVICE_NAME_MSG = "simple-auth服务";
 
