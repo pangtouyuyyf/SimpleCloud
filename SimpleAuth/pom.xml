@@ -46,8 +46,6 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
-
-
         <dependency>
             <groupId>com.simple</groupId>
             <artifactId>simple-common</artifactId>
