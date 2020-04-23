@@ -45,6 +45,14 @@ public class RedisController {
         return Result.success();
     }
 
+    /**
+     * 保存token
+     *
+     * @param key
+     * @param value
+     * @param time
+     * @return
+     */
     @PostMapping("/saveToken")
     public Result<?> saveToken(@RequestParam("key") String key, @RequestParam("value") String value, @RequestParam("time") Integer time) {
         redisOperation.setStr(key, value, time);
