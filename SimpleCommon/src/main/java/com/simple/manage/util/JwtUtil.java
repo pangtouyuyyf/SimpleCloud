@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.simple.manage.config.JwtConfig;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -17,12 +18,36 @@ import java.util.Optional;
  **/
 
 public class JwtUtil {
+    /**
+     * 创建令牌
+     *
+     * @param userId  用户主键
+     * @param channel 客户端渠道(app/web)
+     * @return string
+     */
+    public static String createJWT(String userId, String channel) {
+        String result = null;
+        Date now = new Date();  //当前时间
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(JwtConfig.BASE_64_SECRET);  //秘钥算法
+
+            result = JWT.create()
+                    .withIssuer(JwtConfig.ISSUER)                  //设置发行者
+                    .withClaim(CommonUtil.USER_ID, userId)              //设置参数
+                    .withClaim(CommonUtil.CHANNEL, channel)             //设置参数
+                    .withNotBefore(now)                                 //设置最早时间
+                    .sign(algorithm);                                   //签名加密
+        } catch (Exception e) {
+            LogUtil.error(JwtUtil.class, e.toString());
+        }
+        return result;
+    }
 
     /**
      * 解析令牌
      *
      * @param token 令牌
-     * @return
+     * @return map
      */
     public static Map<String, String> parseJWT(String token) {
         return Optional.ofNullable(token).map(
