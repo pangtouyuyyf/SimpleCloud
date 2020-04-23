@@ -16,12 +16,12 @@ public class BaseClientFallback implements BaseClient {
     private static final String SERVICE_NAME_MSG = "simple-base服务";
 
     public Result<?> getToken(String key) {
-        LogUtil.error(AuthClientFallback.class, SERVICE_NAME_MSG + "redis/getToken接口连接异常!");
+        LogUtil.error(BaseClientFallback.class, SERVICE_NAME_MSG + "redis/getToken接口连接异常!");
         return Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR);
     }
 
     public Result<?> renewToken(String key, Integer time) {
-        LogUtil.error(AuthClientFallback.class, SERVICE_NAME_MSG + "redis/renewToken接口连接异常!");
+        LogUtil.error(BaseClientFallback.class, SERVICE_NAME_MSG + "redis/renewToken接口连接异常!");
         return Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR);
     }
 }
