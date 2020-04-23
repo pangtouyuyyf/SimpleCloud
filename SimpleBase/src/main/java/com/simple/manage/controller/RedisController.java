@@ -44,4 +44,10 @@ public class RedisController {
         redisOperation.expireStr(key, time);
         return Result.success();
     }
+
+    @PostMapping("/saveToken")
+    public Result<?> saveToken(@RequestParam("key") String key, @RequestParam("value") String value, @RequestParam("time") Integer time) {
+        redisOperation.setStr(key, value, time);
+        return Result.success();
+    }
 }
