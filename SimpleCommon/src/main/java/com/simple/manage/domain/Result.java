@@ -28,7 +28,7 @@ public class Result<T> implements Serializable {
      *
      * @return result
      */
-    public static <T> Result<?> success() {
+    public static Result<?> success() {
         return success(null);
     }
 
@@ -64,7 +64,7 @@ public class Result<T> implements Serializable {
      *
      * @return result
      */
-    public static <T> Result<?> error() {
+    public static Result<?> error() {
         Result<?> result = new Result<>();
         result.setCode(SysExpEnum.FAIL.getCode());
         result.setMessage(SysExpEnum.FAIL.getMessage());
@@ -78,7 +78,7 @@ public class Result<T> implements Serializable {
      * @param msg msg
      * @return result
      */
-    public static <T> Result<?> error(String msg) {
+    public static Result<?> error(String msg) {
         Result<?> result = new Result<>();
         result.setCode(SysExpEnum.FAIL.getCode());
         result.setMessage(msg);
@@ -121,11 +121,25 @@ public class Result<T> implements Serializable {
      * @param sysExpEnum enum
      * @return result
      */
-    public static <T> Result<?> error(SysExpEnum sysExpEnum) {
+    public static Result<?> error(SysExpEnum sysExpEnum) {
         Result<?> result = new Result<>();
         result.setCode(sysExpEnum.getCode());
         result.setMessage(sysExpEnum.getMessage());
         result.setData(null);
+        return result;
+    }
+
+    /**
+     * 返回失败(含参)
+     *
+     * @param sysExpEnum enum
+     * @return result
+     */
+    public static <T> Result<?> error(SysExpEnum sysExpEnum, T obj) {
+        Result<T> result = new Result<>();
+        result.setCode(sysExpEnum.getCode());
+        result.setMessage(sysExpEnum.getMessage());
+        result.setData(obj);
         return result;
     }
 
@@ -150,7 +164,7 @@ public class Result<T> implements Serializable {
      *
      * @return boolean
      */
-    public boolean isSuccess() {
+    public boolean done() {
         return code == SysExpEnum.SUCCESS.getCode();
     }
 }
