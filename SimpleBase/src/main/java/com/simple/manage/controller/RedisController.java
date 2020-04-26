@@ -1,6 +1,7 @@
 package com.simple.manage.controller;
 
 import com.simple.manage.component.RedisOperation;
+import com.simple.manage.domain.LoginInfo;
 import com.simple.manage.domain.Result;
 import com.simple.manage.domain.Token;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,8 @@ public class RedisController {
     /**
      * 获取token
      *
-     * @param key
-     * @return
+     * @param key key
+     * @return token
      */
     @GetMapping("/getToken")
     public Result<?> getToken(@RequestParam("key") String key) {
@@ -35,9 +36,9 @@ public class RedisController {
     /**
      * 刷新token有效时间
      *
-     * @param key
-     * @param time
-     * @return
+     * @param key  key
+     * @param time time
+     * @return ?
      */
     @PostMapping("/renewToken")
     public Result<?> renewToken(@RequestParam("key") String key, @RequestParam("time") Integer time) {
@@ -46,16 +47,22 @@ public class RedisController {
     }
 
     /**
-     * 保存token
+     * 保存登录信息(token/loginInfo)
      *
-     * @param key
-     * @param value
-     * @param time
-     * @return
+     * @param tKey      token key
+     * @param tVal      token
+     * @param tTime     token time
+     * @param lKey      loginInfo key
+     * @param loginInfo loginInfo
+     * @param lTime     loginInfo time
+     * @return ?
      */
-    @PostMapping("/saveToken")
-    public Result<?> saveToken(@RequestParam("key") String key, @RequestParam("value") String value, @RequestParam("time") Integer time) {
-        redisOperation.setStr(key, value, time);
+    @PostMapping("/saveLoginInfo")
+    public Result<?> saveToken(@RequestParam("tKey") String tKey, @RequestParam("tVal") String tVal,
+                               @RequestParam("tTime") Integer tTime, @RequestParam("lKey") String lKey,
+                               @RequestBody LoginInfo loginInfo, @RequestParam("lTime") Integer lTime) {
+        redisOperation.setStr(tKey, tVal, tTime);
+        redisOperation.setObj(lKey, loginInfo, lTime);
         return Result.success();
     }
 }
