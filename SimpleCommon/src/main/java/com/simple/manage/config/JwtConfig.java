@@ -19,6 +19,8 @@ public class JwtConfig {
 
     public static final int APP_UPDATE_INTERVAL = 86400;  //jwt app更新间隔:秒(这里为1天)
 
+    public static final int LOGIN_INFO_LIFE_CYCLE = 86400;  //login info更新间隔:秒(这里为10天)
+
     public static final boolean ENABLE_RENEW = true;  //开启自动令牌续权
 
     public static final boolean ANTI_HIJACK = true;  //开启令牌反劫持
