@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simple.manage.client.BaseClient;
 import com.simple.manage.config.JwtConfig;
+import com.simple.manage.config.UrlMatchConfig;
 import com.simple.manage.domain.Result;
 import com.simple.manage.domain.Token;
 import com.simple.manage.enums.SysExpEnum;
@@ -24,7 +25,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
-import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -45,20 +45,30 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
 
+        /* 验证url */
+        if (UrlMatchConfig.isIgnoreToken(request.getURI().getPath())) {
+            return chain.filter(exchange);
+        }
+
+        if (UrlMatchConfig.isForbidden(request.getURI().getPath())) {
+            return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.REJECT)));
+        }
+
         String token = request.getHeaders().getFirst(CommonUtil.TOKEN);
+
         Map<String, String> jwtMap = JwtUtil.parseJWT(token);
 
-        /** 验证令牌合法性 **/
+        /* 验证令牌合法性 */
         if (jwtMap == null) {
             LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌验证失败");
             return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.NEED_LOGIN)));
         }
 
-        /** 获取令牌中的用户、角色和登录渠道 **/
+        /* 获取令牌中的用户、角色和登录渠道 */
         String userId = jwtMap.get(CommonUtil.USER_ID);
         String channel = jwtMap.get(CommonUtil.CHANNEL);
 
-        /** 验证令牌参数 **/
+        /* 验证令牌参数 */
         if (StringUtils.isNoneEmpty(userId)
                 || StringUtils.isNoneEmpty(channel)
                 || !(CommonUtil.CHANNEL_WEB.equals(channel) || CommonUtil.CHANNEL_APP.equals(channel))) {
@@ -69,30 +79,30 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
 
         Result r = null;
 
-        /** 获取服务器缓存令牌 **/
+        /* 获取服务器缓存令牌 */
         List<String> tokenKeyParts = Arrays.asList(CommonUtil.TOKEN_PREFIX, userId, channel);
         String tokenRedisKey = String.join(CommonUtil.UNDERLINE, tokenKeyParts);
         r = baseClient.getToken(tokenRedisKey);
-        if (!r.isSuccess()) {
+        if (!r.done()) {
             LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌查询失败");
             return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.CONNECT_OR_OVERTIME_ERROR)));
         }
         Token tokenRedis = (Token) r.getData();
 
-        /** 验证令牌缓存情况 **/
+        /* 验证令牌缓存情况 */
         if (StringUtils.isNoneEmpty(tokenRedis.getValue())) {
             LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌缓存缺失");
             return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.NEED_LOGIN)));
         }
 
-        /** 查看剩余有效时间 **/
+        /* 查看剩余有效时间 */
         long time = tokenRedis.getTime();
         if (time < 1) {
             LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌缓存失效");
             return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.LOGIN_AGAIN)));
         }
 
-        /** 比对redis内令牌和传入令牌是否一致，防止劫持前一次有效令牌做操作 **/
+        /* 比对redis内令牌和传入令牌是否一致，防止劫持前一次有效令牌做操作 */
         if (JwtConfig.ANTI_HIJACK) {
             if (tokenRedis.getValue().compareTo(token) != 0) {
                 LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌比对失败");
@@ -100,7 +110,7 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
             }
         }
 
-        /** 令牌续权 **/
+        /* 令牌续权 */
         if (JwtConfig.ENABLE_RENEW) {
             if (CommonUtil.CHANNEL_WEB.equals(channel)) {
                 if (time < JwtConfig.WEB_UPDATE_INTERVAL) {
@@ -111,16 +121,11 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
                     r = baseClient.renewToken(tokenRedisKey, JwtConfig.APP_LIFE_CYCLE);
                 }
             }
-            if (!r.isSuccess()) {
+            if (!r.done()) {
                 return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.CONNECT_OR_OVERTIME_ERROR)));
             }
         }
 
-        URI originalRequestUrl = request.getURI();
-        System.out.print("from:");
-        System.out.print(originalRequestUrl.getHost());
-        System.out.print(" >> to:");
-        System.out.print(originalRequestUrl.getPath());
         return chain.filter(exchange);
     }
 
@@ -132,9 +137,9 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
     /**
      * 异常response返回处理
      *
-     * @param response
-     * @param expEnum
-     * @return
+     * @param response response
+     * @param expEnum  enum
+     * @return dataBuffer
      */
     private DataBuffer handleResponse(ServerHttpResponse response, SysExpEnum expEnum) {
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
@@ -148,7 +153,7 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
      * @param r r
      * @return string
      */
-    private String getErrorResult(Result r) {
+    private String getErrorResult(Result<?> r) {
         String result = null;
         try {
             ObjectMapper mapper = new ObjectMapper();
