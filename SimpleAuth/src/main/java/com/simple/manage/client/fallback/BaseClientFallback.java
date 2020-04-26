@@ -16,7 +16,9 @@ import org.springframework.stereotype.Component;
 public class BaseClientFallback implements BaseClient {
     private static final String SERVICE_NAME_MSG = "simple-base服务";
 
-    public Result<?> saveLoginInfo(String key, String value, Integer time, LoginInfo loginInfo) {
+    public Result<?> saveLoginInfo(String tKey, String tVal,
+                                   Integer tTime, String lKey,
+                                   LoginInfo loginInfo, Integer lTime) {
         LogUtil.error(BaseClientFallback.class, SERVICE_NAME_MSG + "redis/saveLoginInfo接口连接异常!");
         return Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR);
     }

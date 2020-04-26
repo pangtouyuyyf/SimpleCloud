@@ -16,5 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "simple-base", contextId = "BaseClient", fallback = BaseClientFallback.class)
 public interface BaseClient {
     @PostMapping("redis/saveLoginInfo")
-    Result<?> saveLoginInfo(@RequestParam("key") String key, @RequestParam("value") String value, @RequestParam("time") Integer time, @RequestBody LoginInfo loginInfo);
+    Result<?> saveLoginInfo(@RequestParam("tKey") String tKey, @RequestParam("tVal") String tVal,
+                            @RequestParam("tTime") Integer tTime, @RequestParam("lKey") String lKey,
+                            @RequestBody LoginInfo loginInfo, @RequestParam("lTime") Integer lTime);
 }
