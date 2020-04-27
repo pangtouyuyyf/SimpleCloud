@@ -33,10 +33,10 @@ public class JwtUtil {
 
             result = JWT.create()
                     .withIssuer(JwtConfig.ISSUER)                  //设置发行者
-                    .withClaim(CommonUtil.USER_ID, userId)              //设置参数
-                    .withClaim(CommonUtil.CHANNEL, channel)             //设置参数
-                    .withNotBefore(now)                                 //设置最早时间
-                    .sign(algorithm);                                   //签名加密
+                    .withClaim(CommonUtil.USER_ID, userId)         //设置参数
+                    .withClaim(CommonUtil.CHANNEL, channel)        //设置参数
+                    .withNotBefore(now)                            //设置最早时间
+                    .sign(algorithm);                              //签名加密
         } catch (Exception e) {
             LogUtil.error(JwtUtil.class, e.toString());
         }

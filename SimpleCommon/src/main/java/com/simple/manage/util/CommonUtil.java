@@ -1,5 +1,8 @@
 package com.simple.manage.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.simple.manage.domain.Result;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -89,5 +92,22 @@ public class CommonUtil {
             url = url.substring(0, url.indexOf(QUESTION_MARK));
         }
         return url;
+    }
+
+    /**
+     * 结果转jackson
+     *
+     * @param r r
+     * @return string
+     */
+    public static String transResult(Result<?> r) {
+        String result = null;
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            result = mapper.writeValueAsString(r);
+        } catch (JsonProcessingException e) {
+            LogUtil.error(CommonUtil.class, "返回结果转化失败");
+        }
+        return result;
     }
 }
