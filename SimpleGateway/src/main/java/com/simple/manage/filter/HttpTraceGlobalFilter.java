@@ -45,13 +45,9 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
 
-        /* 验证url */
+        /* 验证url是否需要token验证 */
         if (UrlMatchConfig.isIgnoreToken(request.getURI().getPath())) {
             return chain.filter(exchange);
-        }
-
-        if (UrlMatchConfig.isForbidden(request.getURI().getPath())) {
-            return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.REJECT)));
         }
 
         String token = request.getHeaders().getFirst(CommonUtil.TOKEN);
