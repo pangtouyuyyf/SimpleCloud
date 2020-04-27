@@ -1,7 +1,5 @@
 package com.simple.manage.filter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simple.manage.client.BaseClient;
 import com.simple.manage.config.JwtConfig;
 import com.simple.manage.config.UrlMatchConfig;
@@ -139,24 +137,6 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
      */
     private DataBuffer handleResponse(ServerHttpResponse response, SysExpEnum expEnum) {
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        return response.bufferFactory().wrap(getErrorResult(Result.error(expEnum)).getBytes());
-    }
-
-
-    /**
-     * 获取异常结果
-     *
-     * @param r r
-     * @return string
-     */
-    private String getErrorResult(Result<?> r) {
-        String result = null;
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            result = mapper.writeValueAsString(r);
-        } catch (JsonProcessingException e) {
-            LogUtil.error(HttpTraceGlobalFilter.class, "返回结果转化失败");
-        }
-        return result;
+        return response.bufferFactory().wrap(CommonUtil.transResult(Result.error(expEnum)).getBytes());
     }
 }
