@@ -38,12 +38,8 @@ public class Result<T> implements Serializable {
      * @param obj obj
      * @return result
      */
-    public static <T> Result<?> success(T obj) {
-        Result<T> result = new Result<>();
-        result.setCode(SysExpEnum.SUCCESS.getCode());
-        result.setMessage(SysExpEnum.SUCCESS.getMessage());
-        result.setData(obj);
-        return result;
+    public static <T> Result success(T obj) {
+        return message(SysExpEnum.SUCCESS.getCode(), SysExpEnum.SUCCESS.getMessage(), null, obj);
     }
 
     /**
@@ -53,10 +49,8 @@ public class Result<T> implements Serializable {
      * @param obj   obj
      * @return result
      */
-    public static <T> Result<?> success(String token, T obj) {
-        Result<?> result = success(obj);
-        result.setToken(token);
-        return result;
+    public static <T> Result success(String token, T obj) {
+        return message(SysExpEnum.SUCCESS.getCode(), SysExpEnum.SUCCESS.getMessage(), token, obj);
     }
 
     /**
@@ -65,11 +59,7 @@ public class Result<T> implements Serializable {
      * @return result
      */
     public static Result<?> error() {
-        Result<?> result = new Result<>();
-        result.setCode(SysExpEnum.FAIL.getCode());
-        result.setMessage(SysExpEnum.FAIL.getMessage());
-        result.setData(null);
-        return result;
+        return message(SysExpEnum.FAIL.getCode(), SysExpEnum.FAIL.getMessage(), null, null);
     }
 
     /**
@@ -79,11 +69,7 @@ public class Result<T> implements Serializable {
      * @return result
      */
     public static Result<?> error(String msg) {
-        Result<?> result = new Result<>();
-        result.setCode(SysExpEnum.FAIL.getCode());
-        result.setMessage(msg);
-        result.setData(null);
-        return result;
+        return message(SysExpEnum.FAIL.getCode(), msg, null, null);
     }
 
     /**
@@ -92,12 +78,8 @@ public class Result<T> implements Serializable {
      * @param obj obj
      * @return result
      */
-    public static <T> Result<?> error(T obj) {
-        Result<T> result = new Result<>();
-        result.setCode(SysExpEnum.FAIL.getCode());
-        result.setMessage(SysExpEnum.FAIL.getMessage());
-        result.setData(obj);
-        return result;
+    public static <T> Result error(T obj) {
+        return message(SysExpEnum.FAIL.getCode(), SysExpEnum.FAIL.getMessage(), null, obj);
     }
 
     /**
@@ -107,12 +89,8 @@ public class Result<T> implements Serializable {
      * @param obj obj
      * @return result
      */
-    public static <T> Result<?> error(String msg, T obj) {
-        Result<T> result = new Result<>();
-        result.setCode(SysExpEnum.FAIL.getCode());
-        result.setMessage(msg);
-        result.setData(obj);
-        return result;
+    public static <T> Result error(String msg, T obj) {
+        return message(SysExpEnum.FAIL.getCode(), msg, null, obj);
     }
 
     /**
@@ -122,11 +100,7 @@ public class Result<T> implements Serializable {
      * @return result
      */
     public static Result<?> error(SysExpEnum sysExpEnum) {
-        Result<?> result = new Result<>();
-        result.setCode(sysExpEnum.getCode());
-        result.setMessage(sysExpEnum.getMessage());
-        result.setData(null);
-        return result;
+        return message(sysExpEnum.getCode(), sysExpEnum.getMessage(), null, null);
     }
 
     /**
@@ -135,12 +109,8 @@ public class Result<T> implements Serializable {
      * @param sysExpEnum enum
      * @return result
      */
-    public static <T> Result<?> error(SysExpEnum sysExpEnum, T obj) {
-        Result<T> result = new Result<>();
-        result.setCode(sysExpEnum.getCode());
-        result.setMessage(sysExpEnum.getMessage());
-        result.setData(obj);
-        return result;
+    public static <T> Result error(SysExpEnum sysExpEnum, T obj) {
+        return message(sysExpEnum.getCode(), sysExpEnum.getMessage(), null, obj);
     }
 
     /**
@@ -151,10 +121,11 @@ public class Result<T> implements Serializable {
      * @param data data
      * @return result
      */
-    public static <T> Result<?> message(int code, String msg, T data) {
+    public static <T> Result message(int code, String msg, String token, T data) {
         Result<T> result = new Result<>();
         result.setCode(code);
         result.setMessage(msg);
+        result.setToken(token);
         result.setData(data);
         return result;
     }
