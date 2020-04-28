@@ -63,8 +63,8 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
         String channel = jwtMap.get(CommonUtil.CHANNEL);
 
         /* 验证令牌参数 */
-        if (StringUtils.isNoneEmpty(userId)
-                || StringUtils.isNoneEmpty(channel)
+        if (!StringUtils.isNoneEmpty(userId)
+                || !StringUtils.isNoneEmpty(channel)
                 || !(CommonUtil.CHANNEL_WEB.equals(channel) || CommonUtil.CHANNEL_APP.equals(channel))) {
             LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌参数有误");
             return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.NEED_LOGIN)));
@@ -84,7 +84,7 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
         Token tokenRedis = (Token) r.getData();
 
         /* 验证令牌缓存情况 */
-        if (StringUtils.isNoneEmpty(tokenRedis.getValue())) {
+        if (!StringUtils.isNoneEmpty(tokenRedis.getValue())) {
             LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌缓存缺失");
             return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.NEED_LOGIN)));
         }
