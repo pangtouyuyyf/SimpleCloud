@@ -26,7 +26,7 @@ public class BaseController {
      * @param obj obj
      * @return result
      */
-    public <T> Result<?> success(T obj) {
+    public <T> Result success(T obj) {
         return Result.success(obj);
     }
 
@@ -37,7 +37,7 @@ public class BaseController {
      * @param obj   obj
      * @return result
      */
-    public <T> Result<?> success(String token, T obj) {
+    public <T> Result success(String token, T obj) {
         return Result.success(token, obj);
     }
 
@@ -67,7 +67,7 @@ public class BaseController {
      * @param obj obj
      * @return result
      */
-    public <T> Result<?> fail(T obj) {
+    public <T> Result fail(T obj) {
         return Result.error(obj);
     }
 
@@ -78,7 +78,7 @@ public class BaseController {
      * @param obj obj
      * @return result
      */
-    public <T> Result<?> fail(String msg, T obj) {
+    public <T> Result fail(String msg, T obj) {
         return Result.error(msg, obj);
     }
 
@@ -91,8 +91,8 @@ public class BaseController {
      * @param data data
      * @return result
      */
-    public <T> Result<?> message(int code, String msg, T data) {
-        return Result.message(code, msg, data);
+    public <T> Result message(int code, String msg, T data) {
+        return Result.message(code, msg, null, data);
     }
 
     /**
