@@ -38,7 +38,7 @@ public class RedisController {
      *
      * @param key  key
      * @param time time
-     * @return ?
+     * @return result
      */
     @PostMapping("/renewToken")
     public Result<?> renewToken(@RequestParam("key") String key, @RequestParam("time") Integer time) {
@@ -47,7 +47,19 @@ public class RedisController {
     }
 
     /**
-     * 保存登录信息(token/loginInfo)
+     * 获取登录信息
+     *
+     * @param key key
+     * @return result
+     */
+    @GetMapping("/getLoginInfo")
+    public Result<LoginInfo> getLoginInfo(@RequestParam("key") String key) {
+        LoginInfo info = (LoginInfo) redisOperation.getObj(key);
+        return Result.success(info);
+    }
+
+    /**
+     * 保存登录信息缓存(token/loginInfo)
      *
      * @param tKey      token key
      * @param tVal      token
@@ -55,12 +67,11 @@ public class RedisController {
      * @param lKey      loginInfo key
      * @param loginInfo loginInfo
      * @param lTime     loginInfo time
-     * @return ?
+     * @return result
      */
-    @PostMapping("/saveLoginInfo")
-    public Result<?> saveToken(@RequestParam("tKey") String tKey, @RequestParam("tVal") String tVal,
-                               @RequestParam("tTime") Integer tTime, @RequestParam("lKey") String lKey,
-                               @RequestBody LoginInfo loginInfo, @RequestParam("lTime") Integer lTime) {
+    @PostMapping("/saveLoginCache")
+    public Result<?> saveLoginCache(@RequestParam("tKey") String tKey, @RequestParam("tVal") String tVal, @RequestParam("tTime") Integer tTime,
+                                    @RequestParam("lKey") String lKey, @RequestBody LoginInfo loginInfo, @RequestParam("lTime") Integer lTime) {
         redisOperation.setStr(tKey, tVal, tTime);
         redisOperation.setObj(lKey, loginInfo, lTime);
         return Result.success();
