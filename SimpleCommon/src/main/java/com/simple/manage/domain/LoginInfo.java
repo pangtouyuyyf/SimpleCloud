@@ -2,6 +2,7 @@ package com.simple.manage.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,10 @@ import java.util.List;
  * CreateTime 2020-04-08 17:16
  **/
 @Data
-public class LoginInfo {
+public class LoginInfo implements Serializable {
+
+    private static final long serialVersionUID = 6900813419624163289L;
+
     private int currId;  //当前用户id
 
     private String channel;  //登录渠道(web/app)
