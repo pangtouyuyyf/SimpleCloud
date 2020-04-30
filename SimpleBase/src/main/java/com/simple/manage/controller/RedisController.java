@@ -26,7 +26,7 @@ public class RedisController {
      * @return token
      */
     @GetMapping("/getToken")
-    public Result getToken(@RequestParam("key") String key) {
+    public Result<Token> getToken(@RequestParam("key") String key) {
         String value = redisOperation.getStr(key);
         long time = redisOperation.getStrExpire(key);
         Token token = new Token(key, value, time);
