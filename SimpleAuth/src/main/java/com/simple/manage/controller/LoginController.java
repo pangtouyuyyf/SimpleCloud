@@ -1,7 +1,9 @@
 package com.simple.manage.controller;
 
+import com.simple.manage.annotation.TokenAnnotation;
 import com.simple.manage.client.BaseClient;
 import com.simple.manage.config.JwtConfig;
+import com.simple.manage.config.SysConfig;
 import com.simple.manage.domain.LoginInfo;
 import com.simple.manage.domain.Result;
 import com.simple.manage.entity.User;
@@ -57,6 +59,42 @@ public class LoginController extends BaseController {
         }
 
         return loginOperate(user, channel);
+    }
+
+    /**
+     * 注销
+     *
+     * @param channel 客户端渠道(app/web)
+     * @return
+     */
+    @TokenAnnotation
+    @GetMapping(value = "/logout")
+    public Result logout(@RequestParam("channel") String channel) throws Exception {
+        if (!CommonUtil.CHANNEL_WEB.equals(channel) && !CommonUtil.CHANNEL_APP.equals(channel)) {
+            LogUtil.error(LoginController.class, LocalDateTime.now() + " 注销参数有误");
+            return this.fail();
+        }
+
+        List<String> tokenKeyParts = Arrays.asList(CommonUtil.TOKEN_PREFIX, channel,
+                Integer.toString(getLoginInfo().getCurrId()));
+
+        List<String> loginInfoKeyParts = Arrays.asList(CommonUtil.LOGIN_INFO_PREFIX,
+                Integer.toString(getLoginInfo().getCurrId()));
+
+        Result r;
+        if (SysConfig.IS_CLEAN_LOGIN_INFO) {
+            r = this.baseClient.delToken(String.join(CommonUtil.UNDERLINE, tokenKeyParts), String.join(CommonUtil.UNDERLINE, loginInfoKeyParts),
+                    CommonUtil.SIGN_YES);
+        } else {
+            r = this.baseClient.delToken(String.join(CommonUtil.UNDERLINE, tokenKeyParts), String.join(CommonUtil.UNDERLINE, loginInfoKeyParts),
+                    CommonUtil.SIGN_NO);
+        }
+
+        if (!r.done()) {
+            return this.fail();
+        }
+
+        return success();
     }
 
     /**
