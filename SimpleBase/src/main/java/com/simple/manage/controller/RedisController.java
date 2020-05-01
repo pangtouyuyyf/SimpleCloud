@@ -47,6 +47,18 @@ public class RedisController {
     }
 
     /**
+     * 删除token缓存
+     *
+     * @param key key
+     * @return result
+     */
+    @DeleteMapping("delToken")
+    public Result<?> delToken(@RequestParam("key") String key) {
+        redisOperation.deleteStr(key);
+        return Result.success();
+    }
+
+    /**
      * 获取登录信息
      *
      * @param key key
@@ -56,6 +68,18 @@ public class RedisController {
     public Result<LoginInfo> getLoginInfo(@RequestParam("key") String key) {
         LoginInfo info = (LoginInfo) redisOperation.getObj(key);
         return Result.success(info);
+    }
+
+    /**
+     * 删除login info缓存
+     *
+     * @param key key
+     * @return result
+     */
+    @DeleteMapping("delLoginInfo")
+    public Result<?> delLoginInfo(@RequestParam("key") String key) {
+        redisOperation.deleteObj(key);
+        return Result.success();
     }
 
     /**
