@@ -15,6 +15,9 @@ public class Token {
 
     private long time;  //剩余有效时间
 
+    public Token() {
+    }
+
     public Token(String key, String value, long time) {
         this.key = key;
         this.value = value;
