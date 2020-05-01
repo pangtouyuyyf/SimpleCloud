@@ -94,6 +94,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
             // 503
             httpStatus = HttpStatus.SERVICE_UNAVAILABLE;
         } else if (ex instanceof ResponseStatusException) {
+            // 404
             ResponseStatusException responseStatusException = (ResponseStatusException) ex;
             httpStatus = responseStatusException.getStatus();
         } else {
