@@ -4,6 +4,7 @@ import com.simple.manage.component.RedisOperation;
 import com.simple.manage.domain.LoginInfo;
 import com.simple.manage.domain.Result;
 import com.simple.manage.domain.Token;
+import com.simple.manage.util.CommonUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -47,18 +48,6 @@ public class RedisController {
     }
 
     /**
-     * 删除token缓存
-     *
-     * @param key key
-     * @return result
-     */
-    @DeleteMapping("delToken")
-    public Result<?> delToken(@RequestParam("key") String key) {
-        redisOperation.deleteStr(key);
-        return Result.success();
-    }
-
-    /**
      * 获取登录信息
      *
      * @param key key
@@ -68,18 +57,6 @@ public class RedisController {
     public Result<LoginInfo> getLoginInfo(@RequestParam("key") String key) {
         LoginInfo info = (LoginInfo) redisOperation.getObj(key);
         return Result.success(info);
-    }
-
-    /**
-     * 删除login info缓存
-     *
-     * @param key key
-     * @return result
-     */
-    @DeleteMapping("delLoginInfo")
-    public Result<?> delLoginInfo(@RequestParam("key") String key) {
-        redisOperation.deleteObj(key);
-        return Result.success();
     }
 
     /**
@@ -98,6 +75,25 @@ public class RedisController {
                                     @RequestParam("lKey") String lKey, @RequestBody LoginInfo loginInfo, @RequestParam("lTime") Integer lTime) {
         redisOperation.setStr(tKey, tVal, tTime);
         redisOperation.setObj(lKey, loginInfo, lTime);
+        return Result.success();
+    }
+
+    /**
+     * 删除登录信息缓存(token/loginInfo)
+     *
+     * @param tKey  token key
+     * @param lKey  loginInfo key
+     * @param lFlag 是否删除 loginInfo(0:是)
+     * @return result
+     */
+    @DeleteMapping("delToken")
+    public Result<?> delToken(@RequestParam("tKey") String tKey,
+                              @RequestParam("lKey") String lKey,
+                              @RequestParam("lFlag") String lFlag) {
+        redisOperation.deleteStr(tKey);
+        if (lFlag.equals(CommonUtil.SIGN_YES)) {
+            redisOperation.deleteObj(lKey);
+        }
         return Result.success();
     }
 }
