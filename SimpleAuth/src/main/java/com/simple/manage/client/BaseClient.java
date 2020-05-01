@@ -22,5 +22,5 @@ public interface BaseClient {
     Result<LoginInfo> getLoginInfo(@RequestParam("key") String key);
 
     @DeleteMapping("redis/delToken")
-    Result<?> delToken(@RequestParam("key") String key);
+    Result<?> delToken(@RequestParam("tKey") String tKey, @RequestParam("lKey") String lKey, @RequestParam("lFlag") String lFlag);
 }

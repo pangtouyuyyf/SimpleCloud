@@ -28,7 +28,7 @@ public class BaseClientFallback implements BaseClient {
         return Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR, null);
     }
 
-    public Result<?> delToken(String key) {
+    public Result<?> delToken(String tKey, String lKey, String lFlag) {
         LogUtil.error(BaseClientFallback.class, SERVICE_NAME_MSG + "redis/delToken接口连接异常!");
         return Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR);
     }
