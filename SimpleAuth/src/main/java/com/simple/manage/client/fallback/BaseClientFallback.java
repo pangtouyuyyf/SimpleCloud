@@ -22,4 +22,14 @@ public class BaseClientFallback implements BaseClient {
         LogUtil.error(BaseClientFallback.class, SERVICE_NAME_MSG + "redis/saveLoginCache接口连接异常!");
         return Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR);
     }
+
+    public Result<LoginInfo> getLoginInfo(String key) {
+        LogUtil.error(BaseClientFallback.class, SERVICE_NAME_MSG + "redis/getLoginInfo接口连接异常!");
+        return Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR, null);
+    }
+
+    public Result<?> delToken(String key) {
+        LogUtil.error(BaseClientFallback.class, SERVICE_NAME_MSG + "redis/delToken接口连接异常!");
+        return Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR);
+    }
 }
