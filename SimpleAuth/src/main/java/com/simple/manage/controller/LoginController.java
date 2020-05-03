@@ -75,11 +75,11 @@ public class LoginController extends BaseController {
             return this.fail();
         }
 
-        List<String> tokenKeyParts = Arrays.asList(CommonUtil.TOKEN_PREFIX, channel,
-                Integer.toString(getLoginInfo().getCurrId()));
+        List<String> tokenKeyParts = Arrays.asList(CommonUtil.TOKEN_PREFIX,
+                Integer.toString(getLoginInfo().getCurrId()), channel);
 
         List<String> loginInfoKeyParts = Arrays.asList(CommonUtil.LOGIN_INFO_PREFIX,
-                Integer.toString(getLoginInfo().getCurrId()));
+                Integer.toString(getLoginInfo().getCurrId()), channel);
 
         Result r;
         if (SysConfig.IS_CLEAN_LOGIN_INFO) {
@@ -119,7 +119,7 @@ public class LoginController extends BaseController {
 
         //生成个人信息缓存主键
         List<String> loginInfoKeyParts = Arrays.asList(
-                CommonUtil.LOGIN_INFO_PREFIX, Integer.toString(user.getId()));
+                CommonUtil.LOGIN_INFO_PREFIX, Integer.toString(user.getId()), channel);
         String loginInfoKey = String.join(CommonUtil.UNDERLINE, loginInfoKeyParts);
 
         Result r = null;
