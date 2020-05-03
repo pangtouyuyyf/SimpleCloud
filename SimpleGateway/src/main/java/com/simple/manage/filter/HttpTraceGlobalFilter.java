@@ -53,7 +53,7 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
         Map<String, String> jwtMap = JwtUtil.parseJWT(token);
 
         /* 验证令牌合法性 */
-        if (jwtMap == null) {
+        if (jwtMap == null || jwtMap.isEmpty()) {
             LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌验证失败");
             return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.NEED_LOGIN)));
         }
