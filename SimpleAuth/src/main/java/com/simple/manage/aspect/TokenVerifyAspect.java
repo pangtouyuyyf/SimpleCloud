@@ -67,7 +67,7 @@ public class TokenVerifyAspect {
         Map<String, String> jwtMap = JwtUtil.parseJWT(token);
 
         /** 验证令牌合法性 **/
-        if (jwtMap == null) {
+        if (jwtMap == null || jwtMap.isEmpty()) {
             LogUtil.error(TokenVerifyAspect.class, LocalDateTime.now() + " 令牌验证失败");
             return Result.error(SysExpEnum.NEED_LOGIN);
         }
