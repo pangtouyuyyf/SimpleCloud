@@ -7,7 +7,6 @@ import com.simple.manage.config.SysConfig;
 import com.simple.manage.domain.LoginInfo;
 import com.simple.manage.domain.Result;
 import com.simple.manage.entity.User;
-import com.simple.manage.enums.SysExpEnum;
 import com.simple.manage.service.UserService;
 import com.simple.manage.util.CommonUtil;
 import com.simple.manage.util.JwtUtil;
