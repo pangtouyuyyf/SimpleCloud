@@ -34,11 +34,11 @@ spring:
           predicates:
             Path=/simple-game/**
       # 熔断降级配置
-      default-filters:
-        - name: Hystrix
-          args:
-            name: fallbackcmd
-            fallbackUri: forward:/gate/fallback
+#      default-filters:
+#        - name: Hystrix
+#          args:
+#            name: fallbackcmd
+#            fallbackUri: forward:/gate/fallback
 
 # feign 默认okhttp的client
 feign:
