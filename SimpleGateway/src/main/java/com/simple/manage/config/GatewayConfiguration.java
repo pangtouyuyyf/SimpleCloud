@@ -63,36 +63,41 @@ public class GatewayConfiguration {
         GatewayCallbackManager.setBlockHandler(new GatewayBlockRequestHandler());
     }
 
-//    private void initCustomizedApis() {
-//        Set<ApiDefinition> definitions = new HashSet<>();
-//        ApiDefinition api1 = new ApiDefinition("some_customized_api")
-//                .setPredicateItems(new HashSet<ApiPredicateItem>() {{
-//                    add(new ApiPathPredicateItem().setPattern("/ahas"));
-//                    add(new ApiPathPredicateItem().setPattern("/product/**")
-//                            .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
-//                }});
-//        ApiDefinition api2 = new ApiDefinition("another_customized_api")
-//                .setPredicateItems(new HashSet<ApiPredicateItem>() {{
-//                    add(new ApiPathPredicateItem().setPattern("/**")
-//                            .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
-//                }});
-//        definitions.add(api1);
-//        definitions.add(api2);
-//        GatewayApiDefinitionManager.loadApiDefinitions(definitions);
-//    }
+    private void initCustomizedApis() {
+        Set<ApiDefinition> definitions = new HashSet<>();
+        ApiDefinition api1 = new ApiDefinition("some_customized_api")
+                .setPredicateItems(new HashSet<ApiPredicateItem>() {{
+                    add(new ApiPathPredicateItem().setPattern("/ahas"));
+                    add(new ApiPathPredicateItem().setPattern("/product/**")
+                            .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
+                }});
+        ApiDefinition api2 = new ApiDefinition("another_customized_api")
+                .setPredicateItems(new HashSet<ApiPredicateItem>() {{
+                    add(new ApiPathPredicateItem().setPattern("/**")
+                            .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
+                }});
+        definitions.add(api1);
+        definitions.add(api2);
+        GatewayApiDefinitionManager.loadApiDefinitions(definitions);
+    }
 
     private void initGatewayRules() {
         Set<GatewayFlowRule> rules = new HashSet<>();
-//        rules.add(new GatewayFlowRule("simple-auth")
-//                .setCount(10) //限流阈值
-//                .setIntervalSec(1) //统计时间窗口，单位是秒，默认是1 秒（目前仅对参数限流生效）
-//                .setMaxQueueingTimeoutMs(1000)   //匀速排队模式下的最长排队时间，单位是毫秒，仅在匀速排队模式下生效
-//        );
-//        rules.add(new GatewayFlowRule("simple-game")
-//                .setCount(10) //限流阈值
-//                .setIntervalSec(1) //统计时间窗口，单位是秒，默认是1 秒（目前仅对参数限流生效）
-//                .setMaxQueueingTimeoutMs(1000)   //匀速排队模式下的最长排队时间，单位是毫秒，仅在匀速排队模式下生效
-//        );
+        rules.add(new GatewayFlowRule("simple-auth")
+                .setCount(10) //限流阈值
+                .setIntervalSec(1) //统计时间窗口，单位是秒，默认是1 秒（目前仅对参数限流生效）
+                .setMaxQueueingTimeoutMs(1000)   //匀速排队模式下的最长排队时间，单位是毫秒，仅在匀速排队模式下生效
+        );
+        rules.add(new GatewayFlowRule("simple-game")
+                .setCount(10) //限流阈值
+                .setIntervalSec(1) //统计时间窗口，单位是秒，默认是1 秒（目前仅对参数限流生效）
+                .setMaxQueueingTimeoutMs(1000)   //匀速排队模式下的最长排队时间，单位是毫秒，仅在匀速排队模式下生效
+        );
+        rules.add(new GatewayFlowRule("simple-base")
+                .setCount(10) //限流阈值
+                .setIntervalSec(1) //统计时间窗口，单位是秒，默认是1 秒（目前仅对参数限流生效）
+                .setMaxQueueingTimeoutMs(1000)   //匀速排队模式下的最长排队时间，单位是毫秒，仅在匀速排队模式下生效
+        );
 //        rules.add(new GatewayFlowRule("simple-game")
 //                //限流阈值
 //                .setCount(30)
@@ -149,4 +154,5 @@ public class GatewayConfiguration {
 //        );
         GatewayRuleManager.loadRules(rules);
     }
+
 }
