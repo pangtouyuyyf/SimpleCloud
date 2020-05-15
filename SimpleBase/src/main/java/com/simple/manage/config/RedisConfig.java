@@ -28,13 +28,13 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     public RedisSerializer<Object> jackson2JsonRedisSerializer() {
-        // 使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值（默认使用JDK的序列化方式）
+        /* 使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值(默认使用JDK的序列化方式) */
         Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
-        // json 转对象类，不设置默认的会将json转成hashmap
+        /* json 转对象类,不设置默认的会将json转成HashMap */
         ObjectMapper om = new ObjectMapper();
-        // 指定要序列化的域，field,get和set,以及修饰符范围，ANY是都有包括private和public
+        /* 指定要序列化的域,field,get和set,以及修饰符范围,ANY是都有包括private和public */
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        // 指定序列化输入的类型，类必须是非final修饰的，final修饰的类，比如String,Integer等会抛出异常
+        /* 指定序列化输入的类型,类必须是非final修饰的(final修饰的类比如String,Integer等会抛出异常) */
         om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
         serializer.setObjectMapper(om);
         return serializer;
@@ -43,14 +43,13 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        // 配置连接工厂
+        /* 配置连接工厂 */
         redisTemplate.setConnectionFactory(lettuceConnectionFactory);
-        // key序列化
+        /* 设置一般对象 key和value序列化模式 */
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        // 值采用json序列化
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer());
 
-        // 设置hash key 和value序列化模式
+        /* 设置hash key和value序列化模式 */
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer());
 
