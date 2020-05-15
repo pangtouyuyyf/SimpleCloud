@@ -8,7 +8,7 @@ package com.simple.manage.config;
 
 public class SysParams {
     /**
-     * 通用配置
+     * 通用参数
      */
     public class Common {
         /* 星号 */
@@ -46,7 +46,7 @@ public class SysParams {
     }
 
     /**
-     * 系統配置
+     * 系统参数
      */
     public class Sys {
         /* 令牌标识字段 */
@@ -64,15 +64,6 @@ public class SysParams {
         /* 用户ID标识字段 */
         public static final String USER_ID = "id";
 
-        /* 令牌命名前缀 */
-        public static final String TOKEN_PREFIX = "token";
-
-        /* 登录信息命名前缀 */
-        public static final String LOGIN_INFO_PREFIX = "loginInfo";
-
-        /* 短信验证码后缀 */
-        public static final String SMS_CODE_SUFFIX = "smsCode";
-
         /* 操作权限编码位数 */
         public static final int OPERATE_CODE_LENGTH = 6;
 
@@ -85,8 +76,6 @@ public class SysParams {
         /* 默认树节点排序 */
         public static final int TREE_DEFAULT_ORDER = 1;
 
-        /* 短信验证码redis主键前缀 */
-        public static final String SMS_VERIFY_CODE_PREFIX = "verifyCode";
 
         /* 是否开启权限验证 */
         public static final boolean ENABLE_AUZ = true;
@@ -102,7 +91,7 @@ public class SysParams {
     }
 
     /**
-     * jwt配置
+     * jwt参数
      */
     public class Jwt {
         /* jwt发行者 */
@@ -131,5 +120,31 @@ public class SysParams {
 
         /* 开启令牌反劫持 */
         public static final boolean ANTI_HIJACK = true;
+    }
+
+    /**
+     * redis参数
+     */
+    public class Redis {
+        /* 令牌命名前缀 */
+        public static final String TOKEN_PREFIX = "token";
+
+        /* 登录信息命名前缀 */
+        public static final String LOGIN_INFO_PREFIX = "loginInfo";
+
+        /* 短信验证码后缀 */
+        public static final String SMS_CODE_SUFFIX = "smsCode";
+
+        /* 短信验证码redis主键前缀 */
+        public static final String SMS_VERIFY_CODE_PREFIX = "verifyCode";
+
+        /* 令牌命名空间 */
+        public static final String TOKEN_NAMESPACE = "TOKEN";
+
+        /* 登录信息命名空间 */
+        public static final String LOGIN_INFO_NAMESPACE = "LOGIN_INFO";
+
+        /* 短信验证码命名空间 */
+        public static final String SMS_VERIFY_CODE_NAMESPACE = "SMS_VERIFY_CODE";
     }
 }
