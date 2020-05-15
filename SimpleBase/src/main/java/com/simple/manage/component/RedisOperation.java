@@ -1,5 +1,6 @@
 package com.simple.manage.component;
 
+import com.simple.manage.config.Configs;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -24,44 +25,48 @@ public class RedisOperation {
     /**
      * 根据key获取String类型
      *
-     * @param key key
+     * @param nameSpace nameSpace
+     * @param key       key
      * @return string
      */
-    public String getStr(String key) {
-        return stringRedisTemplate.opsForValue().get(key);
+    public String getStr(String nameSpace, String key) {
+        return stringRedisTemplate.opsForValue().get(getKey(nameSpace, key));
     }
 
     /**
      * String类型存入redis
      *
-     * @param key   key
-     * @param value value
+     * @param nameSpace 命名空间
+     * @param key       键
+     * @param value     value
      */
-    public void setStr(String key, String value) {
-        stringRedisTemplate.opsForValue().set(key, value);
+    public void setStr(String nameSpace, String key, String value) {
+        stringRedisTemplate.opsForValue().set(getKey(nameSpace, key), value);
     }
 
     /**
      * String类型存入redis并设置有效期
      *
-     * @param key   key
-     * @param value value
+     * @param nameSpace 命名空间
+     * @param key       键
+     * @param value     value
      */
-    public void setStr(String key, String value, long time) {
-        setStr(key, value);
-        expireStr(key, time);
+    public void setStr(String nameSpace, String key, String value, long time) {
+        setStr(nameSpace, key, value);
+        expireStr(nameSpace, key, time);
     }
 
     /**
      * 指定string类型缓存失效时间
      *
-     * @param key  键
-     * @param time 时间(秒)
+     * @param nameSpace 命名空间
+     * @param key       键
+     * @param time      时间(秒)
      * @return
      */
-    public boolean expireStr(String key, long time) {
+    public boolean expireStr(String nameSpace, String key, long time) {
         if (time > 0) {
-            stringRedisTemplate.expire(key, time, TimeUnit.SECONDS);
+            stringRedisTemplate.expire(getKey(nameSpace, key), time, TimeUnit.SECONDS);
             return true;
         } else {
             return false;
@@ -71,55 +76,60 @@ public class RedisOperation {
     /**
      * 获取过期剩余时间
      *
-     * @param key key
+     * @param nameSpace 命名空间
+     * @param key       键
      * @return long
      */
-    public long getStrExpire(String key) {
-        return stringRedisTemplate.getExpire(key, TimeUnit.SECONDS);
+    public long getStrExpire(String nameSpace, String key) {
+        return stringRedisTemplate.getExpire(getKey(nameSpace, key), TimeUnit.SECONDS);
     }
 
     /**
      * 从redis中取出对象信息
      *
-     * @param key key
+     * @param nameSpace 命名空间
+     * @param key       键
      * @return obj
      */
-    public Object getObj(String key) {
-        return redisTemplate.opsForValue().get(key);
+    public Object getObj(String nameSpace, String key) {
+        return redisTemplate.opsForValue().get(getKey(nameSpace, key));
     }
 
     /**
      * 将对象信息放入redis
      *
-     * @param key key
-     * @param obj obj
+     * @param nameSpace 命名空间
+     * @param key       键
+     * @param obj       obj
      */
-    public void setObj(String key, Object obj) {
-        redisTemplate.opsForValue().set(key, obj);
+    public void setObj(String nameSpace, String key, Object obj) {
+        redisTemplate.opsForValue().set(getKey(nameSpace, key), obj);
     }
 
     /**
      * 将对象信息放入redis并设置有效期
      *
-     * @param key key
-     * @param obj obj
+     * @param nameSpace 命名空间
+     * @param key       键
+     * @param obj       obj
      */
-    public void setObj(String key, Object obj, long time) {
-        setObj(key, obj);
-        expireObj(key, time);
+    public void setObj(String nameSpace, String key, Object obj, long time) {
+        setObj(nameSpace, key, obj);
+        expireObj(nameSpace, key, time);
     }
 
 
     /**
      * 指定Obj类型缓存失效时间
      *
-     * @param key  键
-     * @param time 时间(秒)
+     * @param nameSpace 命名空间
+     * @param key       键
+     * @param time      时间(秒)
      * @return boolean
      */
-    public boolean expireObj(String key, long time) {
+    public boolean expireObj(String nameSpace, String key, long time) {
         if (time > 0) {
-            redisTemplate.expire(key, time, TimeUnit.SECONDS);
+            redisTemplate.expire(getKey(nameSpace, key), time, TimeUnit.SECONDS);
             return true;
         } else {
             return false;
@@ -129,29 +139,32 @@ public class RedisOperation {
     /**
      * 获取过期剩余时间
      *
-     * @param key key
+     * @param nameSpace 命名空间
+     * @param key       键
      * @return long
      */
-    public long getObjExpire(String key) {
-        return redisTemplate.getExpire(key, TimeUnit.SECONDS);
+    public long getObjExpire(String nameSpace, String key) {
+        return redisTemplate.getExpire(getKey(nameSpace, key), TimeUnit.SECONDS);
     }
 
     /**
      * 清除redis string缓存
      *
-     * @param key key
+     * @param nameSpace 命名空间
+     * @param key       键
      */
-    public void deleteStr(String key) {
-        stringRedisTemplate.delete(key);
+    public void deleteStr(String nameSpace, String key) {
+        stringRedisTemplate.delete(getKey(nameSpace, key));
     }
 
     /**
      * 清除redis obj缓存
      *
-     * @param key key
+     * @param nameSpace 命名空间
+     * @param key       键
      */
-    public void deleteObj(String key) {
-        redisTemplate.delete(key);
+    public void deleteObj(String nameSpace, String key) {
+        redisTemplate.delete(getKey(nameSpace, key));
     }
 
     /**
@@ -162,5 +175,16 @@ public class RedisOperation {
     public void deleteBatch(String regex) {
         Set<String> keys = redisTemplate.keys(regex);
         redisTemplate.delete(keys);
+    }
+
+    /**
+     * 获取真实key
+     *
+     * @param nameSpace 命名空间
+     * @param key       键
+     * @return
+     */
+    private String getKey(String nameSpace, String key) {
+        return nameSpace + Configs.Common.COLON + key;
     }
 }
