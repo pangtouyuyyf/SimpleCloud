@@ -1,7 +1,7 @@
 package com.simple.manage.config;
 
 /**
- * Description 系统配置
+ * Description 配置参数信息
  * Author chen
  * CreateTime 2020-05-01 13:10
  **/
