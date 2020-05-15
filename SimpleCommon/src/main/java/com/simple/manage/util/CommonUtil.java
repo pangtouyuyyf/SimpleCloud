@@ -21,9 +21,6 @@ public class CommonUtil {
     //否
     public static final String SIGN_NO = "1";
 
-    //令牌标识字段
-    public static final String TOKEN = "token";
-
     //下划线分隔符
     public static final String UNDERLINE = "_";
 
@@ -35,6 +32,12 @@ public class CommonUtil {
 
     //分号分隔符
     public static final String SEMICOLON = ";";
+
+    //冒号分隔符
+    public static final String COLON = ":";
+
+    //令牌标识字段
+    public static final String TOKEN = "token";
 
     //客户登录渠道
     public static final String CHANNEL = "channel";
