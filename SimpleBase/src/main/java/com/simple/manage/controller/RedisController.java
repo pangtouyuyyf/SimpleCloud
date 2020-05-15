@@ -1,10 +1,10 @@
 package com.simple.manage.controller;
 
 import com.simple.manage.component.RedisOperation;
+import com.simple.manage.config.SysParams;
 import com.simple.manage.domain.LoginInfo;
 import com.simple.manage.domain.Result;
 import com.simple.manage.domain.Token;
-import com.simple.manage.util.CommonUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -28,8 +28,8 @@ public class RedisController {
      */
     @GetMapping("/getToken")
     public Result<Token> getToken(@RequestParam("key") String key) {
-        String value = redisOperation.getStr(key);
-        long time = redisOperation.getStrExpire(key);
+        String value = redisOperation.getStr(SysParams.Redis.TOKEN_NAMESPACE, key);
+        long time = redisOperation.getStrExpire(SysParams.Redis.TOKEN_NAMESPACE, key);
         Token token = new Token(key, value, time);
         return Result.success(token);
     }
@@ -43,7 +43,7 @@ public class RedisController {
      */
     @PostMapping("/renewToken")
     public Result<?> renewToken(@RequestParam("key") String key, @RequestParam("time") Integer time) {
-        redisOperation.expireStr(key, time);
+        redisOperation.expireStr(SysParams.Redis.TOKEN_NAMESPACE, key, time);
         return Result.success();
     }
 
@@ -55,7 +55,7 @@ public class RedisController {
      */
     @GetMapping("/getLoginInfo")
     public Result<LoginInfo> getLoginInfo(@RequestParam("key") String key) {
-        LoginInfo info = (LoginInfo) redisOperation.getObj(key);
+        LoginInfo info = (LoginInfo) redisOperation.getObj(SysParams.Redis.LOGIN_INFO_NAMESPACE, key);
         return Result.success(info);
     }
 
@@ -73,8 +73,8 @@ public class RedisController {
     @PostMapping("/saveLoginCache")
     public Result<?> saveLoginCache(@RequestParam("tKey") String tKey, @RequestParam("tVal") String tVal, @RequestParam("tTime") Integer tTime,
                                     @RequestParam("lKey") String lKey, @RequestBody LoginInfo loginInfo, @RequestParam("lTime") Integer lTime) {
-        redisOperation.setStr(tKey, tVal, tTime);
-        redisOperation.setObj(lKey, loginInfo, lTime);
+        redisOperation.setStr(SysParams.Redis.TOKEN_NAMESPACE, tKey, tVal, tTime);
+        redisOperation.setObj(SysParams.Redis.LOGIN_INFO_NAMESPACE, lKey, loginInfo, lTime);
         return Result.success();
     }
 
@@ -90,9 +90,9 @@ public class RedisController {
     public Result<?> delToken(@RequestParam("tKey") String tKey,
                               @RequestParam("lKey") String lKey,
                               @RequestParam("lFlag") String lFlag) {
-        redisOperation.deleteStr(tKey);
-        if (CommonUtil.SIGN_YES.equals(lFlag)) {
-            redisOperation.deleteObj(lKey);
+        redisOperation.deleteStr(SysParams.Redis.TOKEN_NAMESPACE, tKey);
+        if (SysParams.Common.YES.equals(lFlag)) {
+            redisOperation.deleteObj(SysParams.Redis.LOGIN_INFO_NAMESPACE, lKey);
         }
         return Result.success();
     }
