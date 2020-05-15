@@ -91,7 +91,7 @@ public class RedisController {
                               @RequestParam("lKey") String lKey,
                               @RequestParam("lFlag") String lFlag) {
         redisOperation.deleteStr(tKey);
-        if (lFlag.equals(CommonUtil.SIGN_YES)) {
+        if (CommonUtil.SIGN_YES.equals(lFlag)) {
             redisOperation.deleteObj(lKey);
         }
         return Result.success();
