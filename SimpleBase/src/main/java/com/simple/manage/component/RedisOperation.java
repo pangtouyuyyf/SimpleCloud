@@ -1,6 +1,6 @@
 package com.simple.manage.component;
 
-import com.simple.manage.config.Configs;
+import com.simple.manage.config.SysParams;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -185,6 +185,6 @@ public class RedisOperation {
      * @return
      */
     private String getKey(String nameSpace, String key) {
-        return nameSpace + Configs.Common.COLON + key;
+        return nameSpace + SysParams.Common.COLON + key;
     }
 }
