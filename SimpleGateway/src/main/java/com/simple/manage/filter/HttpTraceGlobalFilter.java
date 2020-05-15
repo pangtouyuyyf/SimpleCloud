@@ -1,7 +1,7 @@
 package com.simple.manage.filter;
 
 import com.simple.manage.client.BaseClient;
-import com.simple.manage.config.JwtConfig;
+import com.simple.manage.config.SysParams;
 import com.simple.manage.config.UrlMatchConfig;
 import com.simple.manage.domain.Result;
 import com.simple.manage.domain.Token;
@@ -48,7 +48,7 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
             return chain.filter(exchange);
         }
 
-        String token = request.getHeaders().getFirst(CommonUtil.TOKEN);
+        String token = request.getHeaders().getFirst(SysParams.Sys.TOKEN);
 
         Map<String, String> jwtMap = JwtUtil.parseJWT(token);
 
@@ -59,13 +59,13 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
         }
 
         /* 获取令牌中的用户、角色和登录渠道 */
-        String userId = jwtMap.get(CommonUtil.USER_ID);
-        String channel = jwtMap.get(CommonUtil.CHANNEL);
+        String userId = jwtMap.get(SysParams.Sys.USER_ID);
+        String channel = jwtMap.get(SysParams.Sys.CHANNEL);
 
         /* 验证令牌参数 */
         if (!StringUtils.isNoneEmpty(userId)
                 || !StringUtils.isNoneEmpty(channel)
-                || !(CommonUtil.CHANNEL_WEB.equals(channel) || CommonUtil.CHANNEL_APP.equals(channel))) {
+                || !(SysParams.Sys.CHANNEL_WEB.equals(channel) || SysParams.Sys.CHANNEL_APP.equals(channel))) {
             LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌参数有误");
             return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.NEED_LOGIN)));
 
@@ -74,8 +74,8 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
         Result r = null;
 
         /* 获取服务器缓存令牌 */
-        List<String> tokenKeyParts = Arrays.asList(CommonUtil.TOKEN_PREFIX, userId, channel);
-        String tokenRedisKey = String.join(CommonUtil.UNDERLINE, tokenKeyParts);
+        List<String> tokenKeyParts = Arrays.asList(SysParams.Sys.TOKEN_PREFIX, userId, channel);
+        String tokenRedisKey = String.join(SysParams.Common.UNDERLINE, tokenKeyParts);
         r = baseClient.getToken(tokenRedisKey);
         if (!r.done()) {
             LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌查询失败");
@@ -97,7 +97,7 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
         }
 
         /* 比对redis内令牌和传入令牌是否一致，防止劫持前一次有效令牌做操作 */
-        if (JwtConfig.ANTI_HIJACK) {
+        if (SysParams.Jwt.ANTI_HIJACK) {
             if (tokenRedis.getValue().compareTo(token) != 0) {
                 LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌比对失败");
                 return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.REMOTE_LOGIN)));
@@ -105,14 +105,14 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
         }
 
         /* 令牌续权 */
-        if (JwtConfig.ENABLE_RENEW) {
-            if (CommonUtil.CHANNEL_WEB.equals(channel)) {
-                if (time < JwtConfig.WEB_UPDATE_INTERVAL) {
-                    r = baseClient.renewToken(tokenRedisKey, JwtConfig.WEB_LIFE_CYCLE);
+        if (SysParams.Jwt.ENABLE_RENEW) {
+            if (SysParams.Sys.CHANNEL_WEB.equals(channel)) {
+                if (time < SysParams.Jwt.WEB_UPDATE_INTERVAL) {
+                    r = baseClient.renewToken(tokenRedisKey, SysParams.Jwt.WEB_LIFE_CYCLE);
                 }
             } else {
-                if (time < JwtConfig.APP_UPDATE_INTERVAL) {
-                    r = baseClient.renewToken(tokenRedisKey, JwtConfig.APP_LIFE_CYCLE);
+                if (time < SysParams.Jwt.APP_UPDATE_INTERVAL) {
+                    r = baseClient.renewToken(tokenRedisKey, SysParams.Jwt.APP_LIFE_CYCLE);
                 }
             }
             if (!r.done()) {
