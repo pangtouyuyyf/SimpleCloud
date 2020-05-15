@@ -1,7 +1,8 @@
 package com.simple.manage.domain;
 
 import com.simple.manage.enums.SysExpEnum;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -10,7 +11,8 @@ import java.io.Serializable;
  * Author chen
  * CreateTime 2020-04-05 10:51
  **/
-@Data
+@Getter
+@Setter
 public class Result<T> implements Serializable {
 
     private static final long serialVersionUID = 3160023996606292502L;

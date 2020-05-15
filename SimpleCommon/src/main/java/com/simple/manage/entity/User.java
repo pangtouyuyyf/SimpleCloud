@@ -1,13 +1,15 @@
 package com.simple.manage.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Description 用户信息
  * Author chen
  * CreateTime 2020-04-20 22:12
  **/
-@Data
+@Getter
+@Setter
 public class User {
     private int id;
 

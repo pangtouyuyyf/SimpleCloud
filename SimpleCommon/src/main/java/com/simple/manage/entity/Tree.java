@@ -1,6 +1,7 @@
 package com.simple.manage.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -9,7 +10,8 @@ import java.util.List;
  * Author chen
  * CreateTime 2020-04-04 23:44
  **/
-@Data
+@Getter
+@Setter
 public class Tree {
     private int key;
 

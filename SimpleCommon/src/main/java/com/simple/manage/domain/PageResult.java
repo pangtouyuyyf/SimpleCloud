@@ -1,6 +1,7 @@
 package com.simple.manage.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -9,7 +10,8 @@ import java.io.Serializable;
  * Author chen
  * CreateTime 2020-04-05 10:58
  **/
-@Data
+@Getter
+@Setter
 public class PageResult<T> implements Serializable {
 
     private static final long serialVersionUID = 5923212339331709098L;

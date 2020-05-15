@@ -1,6 +1,7 @@
 package com.simple.manage.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.List;
  * Author chen
  * CreateTime 2020-04-08 17:16
  **/
-@Data
+@Getter
+@Setter
 public class LoginInfo implements Serializable {
 
     private static final long serialVersionUID = 6900813419624163289L;
