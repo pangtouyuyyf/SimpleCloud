@@ -1,10 +1,10 @@
 package com.simple.manage.aspect;
 
 import com.simple.manage.client.BaseClient;
+import com.simple.manage.config.Configs;
 import com.simple.manage.domain.LoginInfo;
 import com.simple.manage.domain.Result;
 import com.simple.manage.enums.SysExpEnum;
-import com.simple.manage.util.CommonUtil;
 import com.simple.manage.util.JwtUtil;
 import com.simple.manage.util.LogUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -62,7 +62,7 @@ public class TokenVerifyAspect {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
 
-        String token = request.getHeader(CommonUtil.TOKEN);
+        String token = request.getHeader(Configs.Sys.TOKEN);
 
         Map<String, String> jwtMap = JwtUtil.parseJWT(token);
 
@@ -73,13 +73,13 @@ public class TokenVerifyAspect {
         }
 
         /** 获取令牌中的用户、角色和登录渠道 **/
-        String userId = jwtMap.get(CommonUtil.USER_ID);
-        String channel = jwtMap.get(CommonUtil.CHANNEL);
+        String userId = jwtMap.get(Configs.Sys.USER_ID);
+        String channel = jwtMap.get(Configs.Sys.CHANNEL);
 
         /** 生成个人信息缓存主键 **/
         List<String> loginInfoKeyParts = Arrays.asList(
-                CommonUtil.LOGIN_INFO_PREFIX, userId, channel);
-        String loginInfoKey = String.join(CommonUtil.UNDERLINE, loginInfoKeyParts);
+                Configs.Sys.LOGIN_INFO_PREFIX, userId, channel);
+        String loginInfoKey = String.join(Configs.Common.UNDERLINE, loginInfoKeyParts);
 
         /** 将登录数据写入ThreadLocal **/
         Result<LoginInfo> r = baseClient.getLoginInfo(loginInfoKey);
