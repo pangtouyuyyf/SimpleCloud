@@ -2,8 +2,7 @@ package com.simple.manage.controller;
 
 import com.simple.manage.annotation.TokenAnnotation;
 import com.simple.manage.client.BaseClient;
-import com.simple.manage.config.JwtConfig;
-import com.simple.manage.config.SysConfig;
+import com.simple.manage.config.SysParams;
 import com.simple.manage.domain.LoginInfo;
 import com.simple.manage.domain.Result;
 import com.simple.manage.entity.User;
@@ -41,7 +40,7 @@ public class LoginController extends BaseController {
     public Result login(@RequestParam("name") String loginName,
                         @RequestParam("pwd") String password,
                         @RequestParam("channel") String channel) {
-        if (!CommonUtil.CHANNEL_WEB.equals(channel) && !CommonUtil.CHANNEL_APP.equals(channel)) {
+        if (!SysParams.Sys.CHANNEL_WEB.equals(channel) && !SysParams.Sys.CHANNEL_APP.equals(channel)) {
             LogUtil.error(LoginController.class, LocalDateTime.now() + " 登录参数有误");
             return this.fail("登录参数有误");
         }
@@ -69,24 +68,24 @@ public class LoginController extends BaseController {
     @TokenAnnotation
     @GetMapping(value = "/logout")
     public Result logout(@RequestParam("channel") String channel) throws Exception {
-        if (!CommonUtil.CHANNEL_WEB.equals(channel) && !CommonUtil.CHANNEL_APP.equals(channel)) {
+        if (!SysParams.Sys.CHANNEL_WEB.equals(channel) && !SysParams.Sys.CHANNEL_APP.equals(channel)) {
             LogUtil.error(LoginController.class, LocalDateTime.now() + " 注销参数有误");
             return this.fail();
         }
 
-        List<String> tokenKeyParts = Arrays.asList(CommonUtil.TOKEN_PREFIX,
+        List<String> tokenKeyParts = Arrays.asList(SysParams.Sys.TOKEN_PREFIX,
                 Integer.toString(getLoginInfo().getCurrId()), channel);
 
-        List<String> loginInfoKeyParts = Arrays.asList(CommonUtil.LOGIN_INFO_PREFIX,
+        List<String> loginInfoKeyParts = Arrays.asList(SysParams.Sys.LOGIN_INFO_PREFIX,
                 Integer.toString(getLoginInfo().getCurrId()), channel);
 
         Result r;
-        if (SysConfig.IS_CLEAN_LOGIN_INFO) {
-            r = this.baseClient.delToken(String.join(CommonUtil.UNDERLINE, tokenKeyParts), String.join(CommonUtil.UNDERLINE, loginInfoKeyParts),
-                    CommonUtil.SIGN_YES);
+        if (SysParams.Sys.IS_CLEAN_LOGIN_INFO) {
+            r = this.baseClient.delToken(String.join(SysParams.Common.UNDERLINE, tokenKeyParts), String.join(SysParams.Common.UNDERLINE, loginInfoKeyParts),
+                    SysParams.Common.YES);
         } else {
-            r = this.baseClient.delToken(String.join(CommonUtil.UNDERLINE, tokenKeyParts), String.join(CommonUtil.UNDERLINE, loginInfoKeyParts),
-                    CommonUtil.SIGN_NO);
+            r = this.baseClient.delToken(String.join(SysParams.Common.UNDERLINE, tokenKeyParts), String.join(SysParams.Common.UNDERLINE, loginInfoKeyParts),
+                    SysParams.Common.NO);
         }
 
         if (!r.done()) {
@@ -113,22 +112,22 @@ public class LoginController extends BaseController {
 
         //生成令牌缓存主键
         List<String> tokenKeyParts = Arrays.asList(
-                CommonUtil.TOKEN_PREFIX, Integer.toString(user.getId()), channel);
-        String tokenRedisKey = String.join(CommonUtil.UNDERLINE, tokenKeyParts);
+                SysParams.Sys.TOKEN_PREFIX, Integer.toString(user.getId()), channel);
+        String tokenRedisKey = String.join(SysParams.Common.UNDERLINE, tokenKeyParts);
 
         //生成个人信息缓存主键
         List<String> loginInfoKeyParts = Arrays.asList(
-                CommonUtil.LOGIN_INFO_PREFIX, Integer.toString(user.getId()), channel);
-        String loginInfoKey = String.join(CommonUtil.UNDERLINE, loginInfoKeyParts);
+                SysParams.Sys.LOGIN_INFO_PREFIX, Integer.toString(user.getId()), channel);
+        String loginInfoKey = String.join(SysParams.Common.UNDERLINE, loginInfoKeyParts);
 
         Result r = null;
         //保存登录信息缓存(令牌和个人信息)
-        if (CommonUtil.CHANNEL_WEB.equals(channel)) {
-            r = baseClient.saveLoginCache(tokenRedisKey, token, JwtConfig.WEB_LIFE_CYCLE, loginInfoKey, loginInfo,
-                    JwtConfig.LOGIN_INFO_LIFE_CYCLE);
+        if (SysParams.Sys.CHANNEL_WEB.equals(channel)) {
+            r = baseClient.saveLoginCache(tokenRedisKey, token, SysParams.Jwt.WEB_LIFE_CYCLE, loginInfoKey, loginInfo,
+                    SysParams.Jwt.LOGIN_INFO_LIFE_CYCLE);
         } else {
-            r = baseClient.saveLoginCache(tokenRedisKey, token, JwtConfig.APP_LIFE_CYCLE, loginInfoKey, loginInfo,
-                    JwtConfig.LOGIN_INFO_LIFE_CYCLE);
+            r = baseClient.saveLoginCache(tokenRedisKey, token, SysParams.Jwt.APP_LIFE_CYCLE, loginInfoKey, loginInfo,
+                    SysParams.Jwt.LOGIN_INFO_LIFE_CYCLE);
         }
 
         if (!r.done()) {
