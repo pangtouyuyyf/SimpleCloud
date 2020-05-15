@@ -78,7 +78,7 @@ public class TokenVerifyAspect {
 
         /** 生成个人信息缓存主键 **/
         List<String> loginInfoKeyParts = Arrays.asList(
-                SysParams.Sys.LOGIN_INFO_PREFIX, userId, channel);
+                SysParams.Redis.LOGIN_INFO_PREFIX, userId, channel);
         String loginInfoKey = String.join(SysParams.Common.UNDERLINE, loginInfoKeyParts);
 
         /** 将登录数据写入ThreadLocal **/

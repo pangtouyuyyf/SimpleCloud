@@ -74,7 +74,7 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
         Result r = null;
 
         /* 获取服务器缓存令牌 */
-        List<String> tokenKeyParts = Arrays.asList(SysParams.Sys.TOKEN_PREFIX, userId, channel);
+        List<String> tokenKeyParts = Arrays.asList(SysParams.Redis.TOKEN_PREFIX, userId, channel);
         String tokenRedisKey = String.join(SysParams.Common.UNDERLINE, tokenKeyParts);
         r = baseClient.getToken(tokenRedisKey);
         if (!r.done()) {

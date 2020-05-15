@@ -73,10 +73,10 @@ public class LoginController extends BaseController {
             return this.fail();
         }
 
-        List<String> tokenKeyParts = Arrays.asList(SysParams.Sys.TOKEN_PREFIX,
+        List<String> tokenKeyParts = Arrays.asList(SysParams.Redis.TOKEN_PREFIX,
                 Integer.toString(getLoginInfo().getCurrId()), channel);
 
-        List<String> loginInfoKeyParts = Arrays.asList(SysParams.Sys.LOGIN_INFO_PREFIX,
+        List<String> loginInfoKeyParts = Arrays.asList(SysParams.Redis.LOGIN_INFO_PREFIX,
                 Integer.toString(getLoginInfo().getCurrId()), channel);
 
         Result r;
@@ -112,12 +112,12 @@ public class LoginController extends BaseController {
 
         //生成令牌缓存主键
         List<String> tokenKeyParts = Arrays.asList(
-                SysParams.Sys.TOKEN_PREFIX, Integer.toString(user.getId()), channel);
+                SysParams.Redis.TOKEN_PREFIX, Integer.toString(user.getId()), channel);
         String tokenRedisKey = String.join(SysParams.Common.UNDERLINE, tokenKeyParts);
 
         //生成个人信息缓存主键
         List<String> loginInfoKeyParts = Arrays.asList(
-                SysParams.Sys.LOGIN_INFO_PREFIX, Integer.toString(user.getId()), channel);
+                SysParams.Redis.LOGIN_INFO_PREFIX, Integer.toString(user.getId()), channel);
         String loginInfoKey = String.join(SysParams.Common.UNDERLINE, loginInfoKeyParts);
 
         Result r = null;
