@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
-import com.simple.manage.config.Configs;
+import com.simple.manage.config.SysParams;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -29,12 +29,12 @@ public class JwtUtil {
         String result = null;
         Date now = new Date();  //当前时间
         try {
-            Algorithm algorithm = Algorithm.HMAC256(Configs.Jwt.BASE_64_SECRET);  //秘钥算法
+            Algorithm algorithm = Algorithm.HMAC256(SysParams.Jwt.BASE_64_SECRET);  //秘钥算法
 
             result = JWT.create()
-                    .withIssuer(Configs.Jwt.ISSUER)                  //设置发行者
-                    .withClaim(Configs.Sys.USER_ID, userId)         //设置参数
-                    .withClaim(Configs.Sys.CHANNEL, channel)        //设置参数
+                    .withIssuer(SysParams.Jwt.ISSUER)                  //设置发行者
+                    .withClaim(SysParams.Sys.USER_ID, userId)         //设置参数
+                    .withClaim(SysParams.Sys.CHANNEL, channel)        //设置参数
                     .withNotBefore(now)                            //设置最早时间
                     .sign(algorithm);                              //签名加密
         } catch (Exception e) {
@@ -54,8 +54,8 @@ public class JwtUtil {
                 t -> {
                     try {
                         // 判断token是否合法
-                        Algorithm algorithm = Algorithm.HMAC256(Configs.Jwt.BASE_64_SECRET);
-                        JWTVerifier verifier = JWT.require(algorithm).withIssuer(Configs.Jwt.ISSUER).build();
+                        Algorithm algorithm = Algorithm.HMAC256(SysParams.Jwt.BASE_64_SECRET);
+                        JWTVerifier verifier = JWT.require(algorithm).withIssuer(SysParams.Jwt.ISSUER).build();
                         Map<String, Claim> map = verifier.verify(t).getClaims();
                         Map<String, String> resultMap = new HashMap<>();
                         map.forEach((k, v) -> resultMap.put(k, v.asString()));

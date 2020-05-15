@@ -2,7 +2,7 @@ package com.simple.manage.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.simple.manage.config.Configs;
+import com.simple.manage.config.SysParams;
 import com.simple.manage.domain.Result;
 import org.apache.commons.lang3.StringUtils;
 
@@ -23,11 +23,11 @@ public class CommonUtil {
         if (StringUtils.isNoneEmpty(url)) {
             return null;
         }
-        if (url.contains(Configs.Common.SEMICOLON)) {
-            url = url.substring(0, url.indexOf(Configs.Common.SEMICOLON));
+        if (url.contains(SysParams.Common.SEMICOLON)) {
+            url = url.substring(0, url.indexOf(SysParams.Common.SEMICOLON));
         }
-        if (url.contains(Configs.Common.QUESTION_MARK)) {
-            url = url.substring(0, url.indexOf(Configs.Common.QUESTION_MARK));
+        if (url.contains(SysParams.Common.QUESTION_MARK)) {
+            url = url.substring(0, url.indexOf(SysParams.Common.QUESTION_MARK));
         }
         return url;
     }

@@ -1,12 +1,12 @@
 package com.simple.manage.config;
 
 /**
- * Description 配置参数信息
+ * Description 系统参数信息
  * Author chen
  * CreateTime 2020-05-01 13:10
  **/
 
-public class Configs {
+public class SysParams {
     /**
      * 通用配置
      */
@@ -86,7 +86,7 @@ public class Configs {
         public static final int TREE_DEFAULT_ORDER = 1;
 
         /* 短信验证码redis主键前缀 */
-        public static final String SMS_VERIFY_CODE_PREFIX = "verifyCode_";
+        public static final String SMS_VERIFY_CODE_PREFIX = "verifyCode";
 
         /* 是否开启权限验证 */
         public static final boolean ENABLE_AUZ = true;
