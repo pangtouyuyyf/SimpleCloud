@@ -26,21 +26,15 @@ public class JwtUtil {
      * @return string
      */
     public static String createJWT(String userId, String channel) {
-        String result = null;
         Date now = new Date();  //当前时间
-        try {
-            Algorithm algorithm = Algorithm.HMAC256(SysParams.Jwt.BASE_64_SECRET);  //秘钥算法
+        Algorithm algorithm = Algorithm.HMAC256(SysParams.Jwt.BASE_64_SECRET);  //秘钥算法
 
-            result = JWT.create()
-                    .withIssuer(SysParams.Jwt.ISSUER)                  //设置发行者
-                    .withClaim(SysParams.Sys.USER_ID, userId)         //设置参数
-                    .withClaim(SysParams.Sys.CHANNEL, channel)        //设置参数
-                    .withNotBefore(now)                            //设置最早时间
-                    .sign(algorithm);                              //签名加密
-        } catch (Exception e) {
-            LogUtil.error(JwtUtil.class, e.toString());
-        }
-        return result;
+        return JWT.create()
+                .withIssuer(SysParams.Jwt.ISSUER)                  //设置发行者
+                .withClaim(SysParams.Sys.USER_ID, userId)         //设置参数
+                .withClaim(SysParams.Sys.CHANNEL, channel)        //设置参数
+                .withNotBefore(now)                            //设置最早时间
+                .sign(algorithm);                              //签名加密
     }
 
     /**
@@ -52,18 +46,13 @@ public class JwtUtil {
     public static Map<String, String> parseJWT(String token) {
         return Optional.ofNullable(token).map(
                 t -> {
-                    try {
-                        // 判断token是否合法
-                        Algorithm algorithm = Algorithm.HMAC256(SysParams.Jwt.BASE_64_SECRET);
-                        JWTVerifier verifier = JWT.require(algorithm).withIssuer(SysParams.Jwt.ISSUER).build();
-                        Map<String, Claim> map = verifier.verify(t).getClaims();
-                        Map<String, String> resultMap = new HashMap<>();
-                        map.forEach((k, v) -> resultMap.put(k, v.asString()));
-                        return resultMap;
-                    } catch (Exception e) {
-                        LogUtil.error(JwtUtil.class, e.toString());
-                        return null;
-                    }
+                    // 判断token是否合法
+                    Algorithm algorithm = Algorithm.HMAC256(SysParams.Jwt.BASE_64_SECRET);
+                    JWTVerifier verifier = JWT.require(algorithm).withIssuer(SysParams.Jwt.ISSUER).build();
+                    Map<String, Claim> map = verifier.verify(t).getClaims();
+                    Map<String, String> resultMap = new HashMap<>();
+                    map.forEach((k, v) -> resultMap.put(k, v.asString()));
+                    return resultMap;
                 }
         ).orElse(null);
     }
