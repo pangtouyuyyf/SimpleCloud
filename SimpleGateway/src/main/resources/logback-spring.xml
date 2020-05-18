@@ -3,7 +3,7 @@
     <!-- 项目名称 -->
     <springProperty name="PROJECT_NAME" source="spring.application.name"/>
     <!-- elk地址 -->
-    <property name="ELK_URL" value="10.132.xx.xx:9250"/>
+    <property name="ELK_URL" value="localhost:9600"/>
     <!-- 日志级别 -->
     <springProperty name="LOGGER_LEVEL" source="log.level"/>
 
