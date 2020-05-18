@@ -76,7 +76,6 @@ public class SysParams {
         /* 默认树节点排序 */
         public static final int TREE_DEFAULT_ORDER = 1;
 
-
         /* 是否开启权限验证 */
         public static final boolean ENABLE_AUZ = true;
 
@@ -126,13 +125,13 @@ public class SysParams {
      * redis参数
      */
     public class Redis {
-        /* 令牌命名前缀 */
+        /* 令牌redis主键前缀 */
         public static final String TOKEN_PREFIX = "token";
 
-        /* 登录信息命名前缀 */
+        /* 登录信息redis主键前缀 */
         public static final String LOGIN_INFO_PREFIX = "loginInfo";
 
-        /* 短信验证码后缀 */
+        /* 短信验证码redis主键后缀 */
         public static final String SMS_CODE_SUFFIX = "smsCode";
 
         /* 短信验证码redis主键前缀 */
