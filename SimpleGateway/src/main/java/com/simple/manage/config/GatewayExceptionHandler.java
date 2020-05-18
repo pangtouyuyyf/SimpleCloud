@@ -89,21 +89,23 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
         Map<String, Object> map = new HashMap<>(2, 1);
 
         HttpStatus httpStatus;
+        SysExpEnum sysExpEnum;
         if (ex instanceof NotFoundException) {
             // 503
             httpStatus = HttpStatus.SERVICE_UNAVAILABLE;
-            map.put("result", Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR));
+            sysExpEnum = SysExpEnum.CONNECT_OR_OVERTIME_ERROR;
         } else if (ex instanceof ResponseStatusException) {
             // 404
             ResponseStatusException responseStatusException = (ResponseStatusException) ex;
             httpStatus = responseStatusException.getStatus();
-            map.put("result", Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR));
+            sysExpEnum = SysExpEnum.CONNECT_OR_OVERTIME_ERROR;
         } else {
             // 500
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-            map.put("result", Result.error(SysExpEnum.COMMON_ERROR));
+            sysExpEnum = SysExpEnum.COMMON_ERROR;
         }
         map.put("httpStatus", httpStatus);
+        map.put("result", Result.error(sysExpEnum));
 
         /* 错误记录 */
         LogUtil.error(GatewayExceptionHandler.class, "请求发生异常，请求URI：" + request.getPath() +
