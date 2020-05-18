@@ -33,7 +33,10 @@ spring:
           uri: lb://simple-game
           predicates:
             Path=/simple-game/**
-      # 熔断降级配置
+    sentinel:
+      log:
+        dir: H:/log/sentinel
+    # 熔断降级配置
 #      default-filters:
 #        - name: Hystrix
 #          args:
