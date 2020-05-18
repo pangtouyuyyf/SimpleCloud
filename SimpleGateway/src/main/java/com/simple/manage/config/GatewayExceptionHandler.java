@@ -87,19 +87,21 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
         ServerHttpRequest request = exchange.getRequest();
         Map<String, Object> map = new HashMap<>(2, 1);
-        map.put("result", Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR));
 
         HttpStatus httpStatus;
         if (ex instanceof NotFoundException) {
             // 503
             httpStatus = HttpStatus.SERVICE_UNAVAILABLE;
+            map.put("result", Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR));
         } else if (ex instanceof ResponseStatusException) {
             // 404
             ResponseStatusException responseStatusException = (ResponseStatusException) ex;
             httpStatus = responseStatusException.getStatus();
+            map.put("result", Result.error(SysExpEnum.CONNECT_OR_OVERTIME_ERROR));
         } else {
             // 500
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            map.put("result", Result.error(SysExpEnum.COMMON_ERROR));
         }
         map.put("httpStatus", httpStatus);
 
