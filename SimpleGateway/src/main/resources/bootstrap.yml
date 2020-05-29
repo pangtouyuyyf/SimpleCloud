@@ -35,7 +35,7 @@ spring:
             Path=/simple-game/**
     sentinel:
       log:
-        dir: H:/log/sentinel
+        dir: H:\log\sentinel
     # 熔断降级配置
 #      default-filters:
 #        - name: Hystrix
