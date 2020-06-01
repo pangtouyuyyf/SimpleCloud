@@ -1,8 +1,8 @@
-package com.simple.auth.controller;
+package com.simple.common.controller;
 
-import com.simple.auth.aspect.RequestLoginContextHolder;
 import com.simple.common.domain.LoginInfo;
 import com.simple.common.domain.Result;
+import com.simple.common.holder.RequestLoginContextHolder;
 
 /**
  * Description 基础controller
