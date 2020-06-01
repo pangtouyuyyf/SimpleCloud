@@ -1,5 +1,6 @@
 package com.simple.auth.controller;
 
+import com.simple.common.controller.BaseController;
 import com.simple.common.domain.LoginInfo;
 import com.simple.common.domain.Result;
 import org.springframework.web.bind.annotation.GetMapping;
