@@ -1,0 +1,110 @@
+package com.simple.auth.service.impl;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.simple.auth.dao.RoleRouteDao;
+import com.simple.auth.dao.RouteDao;
+import com.simple.auth.service.RouteService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Description 路由操作服务接口实现
+ * Author chen
+ * CreateTime 2018-09-06 17:45
+ **/
+@Service
+public class RouteServiceImpl implements RouteService {
+    @Resource
+    private RouteDao routeDao;
+
+    @Resource
+    private RoleRouteDao roleRouteDao;
+
+    /**
+     * 添加或更新路由
+     *
+     * @param route
+     * @return
+     */
+    public int addOrUpdRoute(Map<String, Object> route) {
+        int result = 0;
+        Integer id = route.get("route_id") == null ? null : Integer.valueOf(route.get("route_id").toString());
+        int count = this.routeDao.checkRoute(id);
+        if (count == 0) {
+            //新增
+            result = this.routeDao.addRoute(route);
+        } else if (count == 1) {
+            //修改
+            result = this.routeDao.updRoute(route);
+        } else {
+        }
+        return result;
+    }
+
+    /**
+     * 查询路由
+     *
+     * @param routeId
+     * @return
+     */
+    public Map<String, Object> queryRoute(int routeId) {
+        return this.routeDao.queryRoute(routeId);
+    }
+
+    /**
+     * 查询路由列表
+     *
+     * @param params
+     * @param page
+     * @param size
+     * @return
+     */
+    public PageInfo queryRouteList(Map<String, Object> params, int page, int size) {
+        return PageHelper.startPage(page, size).doSelectPageInfo(() -> routeDao.queryRouteList(params));
+    }
+
+    /**
+     * 逻辑删除路由
+     *
+     * @param routeId
+     * @param userId
+     * @return
+     */
+    @Transactional
+    public int delRoute(int routeId, int userId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("route_id", routeId);
+
+        //删除关联
+        this.roleRouteDao.delRoleRoute(params);
+
+        params.put("update_id", userId);
+        params.put("update_time", LocalDateTime.now());
+        params.put("is_delete", "1");
+
+        return this.routeDao.delRoute(params);
+    }
+
+    /**
+     * 删除路由
+     *
+     * @param routeId
+     * @return
+     */
+    @Transactional
+    public int delRouteForReal(int routeId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("route_id", routeId);
+
+        //删除关联
+        this.roleRouteDao.delRoleRoute(params);
+
+        return this.routeDao.delRouteForReal(routeId);
+    }
+}
