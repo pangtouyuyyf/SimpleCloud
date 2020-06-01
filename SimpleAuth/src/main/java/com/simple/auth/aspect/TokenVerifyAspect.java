@@ -5,13 +5,11 @@ import com.simple.common.config.SysParams;
 import com.simple.common.domain.LoginInfo;
 import com.simple.common.domain.Result;
 import com.simple.common.enums.SysExpEnum;
+import com.simple.common.holder.RequestLoginContextHolder;
 import com.simple.common.util.JwtUtil;
 import com.simple.common.util.LogUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -96,13 +94,21 @@ public class TokenVerifyAspect {
     }
 
     /**
+     * 清除
+     */
+    @After("carpetTokenVerify() || exactTokenVerify()")
+    public void doAfter() {
+        RequestLoginContextHolder.destroy();
+    }
+
+    /**
      * 异常处理
      *
      * @param throwable
      * @return
      */
     @AfterThrowing(pointcut = "carpetTokenVerify() || exactTokenVerify()", throwing = "throwable")
-    public Object AfterThrowingAspect(Throwable throwable) {
+    public Object doAfterThrowing(Throwable throwable) {
         LogUtil.error(TokenVerifyAspect.class, throwable.toString());
         return Result.error(SysExpEnum.COMMON_ERROR);
     }
