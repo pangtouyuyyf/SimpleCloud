@@ -3,6 +3,8 @@ package com.simple.common.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * Description 用户信息
  * Author chen
@@ -10,7 +12,7 @@ import lombok.Setter;
  **/
 @Getter
 @Setter
-public class User {
+public class User implements Serializable {
     private int id;
 
     private String name;

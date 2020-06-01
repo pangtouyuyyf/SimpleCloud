@@ -3,6 +3,7 @@ package com.simple.common.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,12 +13,12 @@ import java.util.List;
  **/
 @Getter
 @Setter
-public class Tree {
+public class Tree implements Serializable {
     private int key;
 
     private String title;
 
-    private boolean isLeaf;
+    private boolean leaf;
 
     private List<Tree> children;
 }

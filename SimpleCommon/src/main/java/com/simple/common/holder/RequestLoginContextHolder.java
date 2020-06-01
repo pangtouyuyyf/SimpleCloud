@@ -1,7 +1,6 @@
-package com.simple.auth.aspect;
+package com.simple.common.holder;
 
 import com.simple.common.domain.LoginInfo;
-import org.springframework.core.NamedInheritableThreadLocal;
 
 /**
  * Description 请求缓存数据ThreadLocal
@@ -10,7 +9,7 @@ import org.springframework.core.NamedInheritableThreadLocal;
  **/
 
 public abstract class RequestLoginContextHolder {
-    private static final ThreadLocal<LoginInfo> inheritableUserHolder = new NamedInheritableThreadLocal<>("Request LoginInfo");
+    private static final ThreadLocal<LoginInfo> inheritableUserHolder = new InheritableThreadLocal<>();
 
     public static void destroy() {
         inheritableUserHolder.remove();
