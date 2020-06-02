@@ -1,14 +1,2 @@
-spring:
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    password:
-    timeout: 10000ms # 连接超时时间
-    lettuce:
-      pool:
-        max-active: 8 # 最大连接数
-        max-wait: -1ms # 默认-1 最大连接阻塞等待时间(负数表示没限制)
-        max-idle: 8 # 最大空闲连接 默认8
-        min-idle: 0 # 最小空闲连接
 logging:
   config: classpath:logback-spring.xml

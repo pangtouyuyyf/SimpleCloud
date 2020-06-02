@@ -13,6 +13,11 @@ spring:
         namespace: 6d17dfa1-5036-4de1-a680-c5d0bcee1a04
         # 文件格式
         file-extension: yaml
+        # 共享配置
+        shared-configs: [
+          {dataId: simple-all.yaml, group: DEV_ALL},
+          {dataId: simple-redis.yaml, group: DEV_REDIS}
+        ]
       discovery:
         # 分组名称 (服务必须在相同分组才能被发现)
         group: DEV_CLOUD
