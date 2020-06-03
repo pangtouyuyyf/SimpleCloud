@@ -2,10 +2,10 @@ package com.simple.auth.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.simple.auth.dao.OrgDao;
+import com.simple.access.dao.OrgDao;
+import com.simple.access.entity.Org;
+import com.simple.access.entity.Tree;
 import com.simple.auth.service.OrgService;
-import com.simple.common.entity.Org;
-import com.simple.common.entity.Tree;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

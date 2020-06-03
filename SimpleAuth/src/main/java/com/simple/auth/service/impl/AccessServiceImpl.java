@@ -2,8 +2,8 @@ package com.simple.auth.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.simple.auth.dao.AccessDao;
-import com.simple.auth.dao.RoleAccessDao;
+import com.simple.access.dao.AccessDao;
+import com.simple.access.dao.RoleAccessDao;
 import com.simple.auth.service.AccessService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

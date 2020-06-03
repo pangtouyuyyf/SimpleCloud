@@ -2,7 +2,7 @@ package com.simple.auth.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.simple.auth.dao.DataDictDao;
+import com.simple.access.dao.DataDictDao;
 import com.simple.auth.service.DataDictService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

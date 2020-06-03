@@ -1,7 +1,7 @@
 package com.simple.auth.service.impl;
 
-import com.simple.auth.dao.UserDao;
-import com.simple.common.entity.User;
+import com.simple.access.dao.UserDao;
+import com.simple.access.entity.User;
 import com.simple.auth.service.UserService;
 import org.springframework.stereotype.Service;
 

@@ -2,7 +2,7 @@ package com.simple.auth.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.simple.auth.dao.RoleAccessDao;
+import com.simple.access.dao.RoleAccessDao;
 import com.simple.auth.service.RoleAccessService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,7 +2,7 @@ package com.simple.auth.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.simple.auth.dao.ModuleDao;
+import com.simple.access.dao.ModuleDao;
 import com.simple.auth.service.ModuleService;
 import org.springframework.stereotype.Service;
 

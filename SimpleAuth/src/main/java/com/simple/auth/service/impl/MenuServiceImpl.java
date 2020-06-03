@@ -2,8 +2,8 @@ package com.simple.auth.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.simple.auth.dao.MenuDao;
-import com.simple.auth.dao.RoleMenuDao;
+import com.simple.access.dao.MenuDao;
+import com.simple.access.dao.RoleMenuDao;
 import com.simple.auth.service.MenuService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
