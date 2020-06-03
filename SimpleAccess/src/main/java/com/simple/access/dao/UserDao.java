@@ -1,6 +1,6 @@
-package com.simple.auth.dao;
+package com.simple.access.dao;
 
-import com.simple.common.entity.User;
+import com.simple.access.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
