@@ -1,12 +1,12 @@
 package com.simple.auth.controller;
 
+import com.simple.access.entity.User;
 import com.simple.common.annotation.TokenAnnotation;
 import com.simple.auth.client.BaseClient;
 import com.simple.common.config.SysParams;
 import com.simple.common.controller.BaseController;
 import com.simple.common.domain.LoginInfo;
 import com.simple.common.domain.Result;
-import com.simple.common.entity.User;
 import com.simple.auth.service.UserService;
 import com.simple.common.util.JwtUtil;
 import com.simple.common.util.LogUtil;
