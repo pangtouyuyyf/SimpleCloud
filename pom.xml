@@ -78,6 +78,7 @@
     </dependencies>
 
     <modules>
+        <module>SimpleAccess</module>
         <module>SimpleAuth</module>
         <module>SimpleAuto</module>
         <module>SimpleBase</module>
