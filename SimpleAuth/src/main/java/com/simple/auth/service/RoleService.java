@@ -1,7 +1,7 @@
 package com.simple.auth.service;
 
 import com.github.pagehelper.PageInfo;
-import com.simple.common.entity.Role;
+import com.simple.access.entity.Role;
 
 import java.util.List;
 import java.util.Map;

@@ -1,8 +1,8 @@
 package com.simple.auth.service;
 
 import com.github.pagehelper.PageInfo;
-import com.simple.common.entity.Org;
-import com.simple.common.entity.Tree;
+import com.simple.access.entity.Org;
+import com.simple.access.entity.Tree;
 
 import java.util.List;
 import java.util.Map;
