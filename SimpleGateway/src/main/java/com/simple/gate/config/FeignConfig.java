@@ -20,7 +20,7 @@ import java.util.List;
 @Configuration
 public class FeignConfig {
     /**
-     * 升级版本后， 不加这个 gateway 使用feign会报错，同时feign client返回对象中泛型必须要有无参构造器，不知道什么原因
+     * 该版本不加这个，gateway使用feign会报错，同时feign client返回对象中泛型必须要有无参构造器，不知道什么原因
      *
      * @return
      */
