@@ -82,7 +82,6 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
         this.messageWriters = messageWriters;
     }
 
-
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
         ServerHttpRequest request = exchange.getRequest();
