@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableFeignClients
-@SpringBootApplication(scanBasePackages = "com.simple")
-@MapperScan(basePackages = "com.simple")
+@SpringBootApplication
+@MapperScan(basePackages = "com.simple.access")
 public class SimpleAuthApplication {
 
     public static void main(String[] args) {
