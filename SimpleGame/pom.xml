@@ -30,8 +30,30 @@
         </dependency>
 
         <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+            <version>${feign-okhttp.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.simple</groupId>
             <artifactId>simple-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.simple</groupId>
+            <artifactId>simple-access</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
