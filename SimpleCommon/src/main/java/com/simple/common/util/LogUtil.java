@@ -48,11 +48,4 @@ public class LogUtil {
             logger.info(message);
         }
     }
-
-    public static void stash(String message){
-        Logger logger = LoggerFactory.getLogger("");
-        if (logger.isInfoEnabled()) {
-            logger.info(message);
-        }
-    }
 }
