@@ -49,8 +49,9 @@ public class LoginController extends BaseController {
         params.put("login_name", loginName);
         params.put("password", password);
 
-        User user = userService.queryUserEntity(params);
         //查询用户
+        User user = userService.queryUser(params);
+
         if (user == null) {
             LogUtil.error(LoginController.class, LocalDateTime.now() + " 用户查询失败");
             return this.fail("用户名密码错误");
