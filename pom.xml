@@ -36,6 +36,7 @@
         <druid.version>1.2.3</druid.version>
         <postgresql.version>42.2.18</postgresql.version>
         <commons-pool2.version>2.9.0</commons-pool2.version>
+        <elasticsearch.version>7.10.1</elasticsearch.version>
     </properties>
 
     <dependencyManagement>
