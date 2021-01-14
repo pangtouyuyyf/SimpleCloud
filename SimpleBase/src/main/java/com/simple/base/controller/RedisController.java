@@ -2,6 +2,7 @@ package com.simple.base.controller;
 
 import com.simple.base.component.RedisOperation;
 import com.simple.common.config.SysParams;
+import com.simple.common.controller.BaseController;
 import com.simple.common.domain.LoginInfo;
 import com.simple.common.domain.Result;
 import com.simple.common.domain.Token;
@@ -16,7 +17,7 @@ import javax.annotation.Resource;
  **/
 @RestController
 @RequestMapping(value = "/redis")
-public class RedisController {
+public class RedisController extends BaseController {
     @Resource
     private RedisOperation redisOperation;
 
@@ -31,7 +32,7 @@ public class RedisController {
         String value = redisOperation.getStr(SysParams.Redis.TOKEN_NAMESPACE, key);
         long time = redisOperation.getStrExpire(SysParams.Redis.TOKEN_NAMESPACE, key);
         Token token = new Token(key, value, time);
-        return Result.success(token);
+        return success(token);
     }
 
     /**
@@ -44,7 +45,7 @@ public class RedisController {
     @PostMapping("/renewToken")
     public Result<?> renewToken(@RequestParam("key") String key, @RequestParam("time") Integer time) {
         redisOperation.expireStr(SysParams.Redis.TOKEN_NAMESPACE, key, time);
-        return Result.success();
+        return success();
     }
 
     /**
@@ -56,7 +57,7 @@ public class RedisController {
     @GetMapping("/getLoginInfo")
     public Result<LoginInfo> getLoginInfo(@RequestParam("key") String key) {
         LoginInfo info = (LoginInfo) redisOperation.getObj(SysParams.Redis.LOGIN_INFO_NAMESPACE, key);
-        return Result.success(info);
+        return success(info);
     }
 
     /**
@@ -75,7 +76,7 @@ public class RedisController {
                                     @RequestParam("lKey") String lKey, @RequestBody LoginInfo loginInfo, @RequestParam("lTime") Integer lTime) {
         redisOperation.setStr(SysParams.Redis.TOKEN_NAMESPACE, tKey, tVal, tTime);
         redisOperation.setObj(SysParams.Redis.LOGIN_INFO_NAMESPACE, lKey, loginInfo, lTime);
-        return Result.success();
+        return success();
     }
 
     /**
@@ -94,6 +95,6 @@ public class RedisController {
         if (SysParams.Common.YES.equals(lFlag)) {
             redisOperation.deleteObj(SysParams.Redis.LOGIN_INFO_NAMESPACE, lKey);
         }
-        return Result.success();
+        return success();
     }
 }
