@@ -91,7 +91,7 @@ public class BaseController {
      * @param data data
      * @return result
      */
-    public <T> Result message(int code, String msg, T data) {
+    public <T> Result msg(int code, String msg, T data) {
         return Result.message(code, msg, null, data);
     }
 
