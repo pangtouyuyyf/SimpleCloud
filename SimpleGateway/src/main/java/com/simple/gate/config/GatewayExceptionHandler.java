@@ -3,6 +3,7 @@ package com.simple.gate.config;
 import com.simple.common.domain.Result;
 import com.simple.common.enums.SysExpEnum;
 import com.simple.common.util.LogUtil;
+import org.apache.http.HttpHeaders;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.codec.HttpMessageReader;
 import org.springframework.http.codec.HttpMessageWriter;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.Assert;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RequestPredicates;
@@ -90,9 +92,14 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
         HttpStatus httpStatus;
         SysExpEnum sysExpEnum;
         if (ex instanceof NotFoundException) {
-            // 503
-            httpStatus = HttpStatus.SERVICE_UNAVAILABLE;
-            sysExpEnum = SysExpEnum.CONNECT_OR_OVERTIME_ERROR;
+            // 503 服务熔断重定向
+            ServerHttpResponse response = exchange.getResponse();
+            // 该重定向地址不需要token
+            response.getHeaders().set(HttpHeaders.LOCATION, "/simple-base/default/fail");
+            //303状态码表示由于请求对应的资源存在着另一个URI，应使用GET方法定向获取请求的资源
+            response.setStatusCode(HttpStatus.SEE_OTHER);
+            response.getHeaders().add("Content-Type", "text/plain;charset=UTF-8");
+            return response.setComplete();
         } else if (ex instanceof ResponseStatusException) {
             // 404
             ResponseStatusException responseStatusException = (ResponseStatusException) ex;
@@ -111,7 +118,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
                 "，请求方法：" + request.getMethodValue() +
                 "异常信息： " + ex.getMessage());
 
-        /* 参考AbstractErrorWebExceptionHandler */
+        /* 参考 AbstractErrorWebExceptionHandler */
         if (exchange.getResponse().isCommitted()) {
             return Mono.error(ex);
         }
