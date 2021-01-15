@@ -33,6 +33,10 @@ spring:
           uri: lb://simple-game
           predicates:
             Path=/simple-game/**
+        - id: simple-base
+          uri: lb://simple-base
+          predicates:
+            Path=/simple-base/default/**
     sentinel:
       log:
         dir: H:\log\sentinel
