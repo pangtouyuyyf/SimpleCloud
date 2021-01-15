@@ -13,7 +13,7 @@ import java.util.List;
 
 public class UrlMatchConfig {
     /* 无需token验证的url */
-    private static List<String> URL_ABS_PERMIT = Arrays.asList("/simple-auth/sys/login", "/simple-base/default/login");
+    private static List<String> URL_ABS_PERMIT = Arrays.asList("/simple-auth/sys/login", "/simple-base/default/fail");
 
     /* ant匹配 */
     private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
