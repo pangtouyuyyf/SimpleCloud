@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.codec.HttpMessageReader;
 import org.springframework.http.codec.HttpMessageWriter;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.Assert;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RequestPredicates;
@@ -56,7 +55,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
     private ThreadLocal<Map<String, Object>> exceptionHandlerResult = new ThreadLocal<>();
 
     /**
-     * 参考AbstractErrorWebExceptionHandler
+     * 参考 AbstractErrorWebExceptionHandler
      *
      * @param messageReaders
      */
@@ -66,7 +65,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
     }
 
     /**
-     * 参考AbstractErrorWebExceptionHandler
+     * 参考 AbstractErrorWebExceptionHandler
      *
      * @param viewResolvers
      */
@@ -75,7 +74,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
     }
 
     /**
-     * 参考AbstractErrorWebExceptionHandler
+     * 参考 AbstractErrorWebExceptionHandler
      *
      * @param messageWriters
      */
@@ -93,13 +92,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
         SysExpEnum sysExpEnum;
         if (ex instanceof NotFoundException) {
             // 503 服务熔断重定向
-            ServerHttpResponse response = exchange.getResponse();
-            // 该重定向地址不需要token
-            response.getHeaders().set(HttpHeaders.LOCATION, "/simple-base/default/fail");
-            //303状态码表示由于请求对应的资源存在着另一个URI，应使用GET方法定向获取请求的资源
-            response.setStatusCode(HttpStatus.SEE_OTHER);
-            response.getHeaders().add("Content-Type", "text/plain;charset=UTF-8");
-            return response.setComplete();
+            return redirect(exchange, "/simple-base/default/fail");
         } else if (ex instanceof ResponseStatusException) {
             // 404
             ResponseStatusException responseStatusException = (ResponseStatusException) ex;
@@ -133,7 +126,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
     }
 
     /**
-     * 参考DefaultErrorWebExceptionHandler
+     * 参考 DefaultErrorWebExceptionHandler
      *
      * @param request
      * @return
@@ -146,7 +139,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
     }
 
     /**
-     * 参考AbstractErrorWebExceptionHandler
+     * 参考 AbstractErrorWebExceptionHandler
      *
      * @param exchange
      * @param response
@@ -159,7 +152,23 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
     }
 
     /**
-     * 参考AbstractErrorWebExceptionHandler
+     * 重定向
+     *
+     * @param exchange
+     * @param location
+     * @return
+     */
+    private Mono<Void> redirect(ServerWebExchange exchange, String location) {
+        // 该重定向地址不需要token
+        exchange.getResponse().getHeaders().set(HttpHeaders.LOCATION, location);
+        //303状态码表示由于请求对应的资源存在着另一个URI，应使用GET方法定向获取请求的资源
+        exchange.getResponse().setStatusCode(HttpStatus.SEE_OTHER);
+        exchange.getResponse().getHeaders().add("Content-Type", "text/plain;charset=UTF-8");
+        return exchange.getResponse().setComplete();
+    }
+
+    /**
+     * 参考 AbstractErrorWebExceptionHandler
      */
     private class ResponseContext implements ServerResponse.Context {
         @Override
