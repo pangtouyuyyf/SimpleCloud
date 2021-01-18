@@ -152,7 +152,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
     }
 
     /**
-     * 重定向
+     * 重定向:重定向是浏览器行为
      *
      * @param exchange
      * @param location
