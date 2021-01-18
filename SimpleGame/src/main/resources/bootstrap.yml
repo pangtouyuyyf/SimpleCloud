@@ -20,3 +20,9 @@ spring:
         server-addr: 127.0.0.1:8848
         # 对应命名空间id
         namespace: bd2b1035-c415-4518-8b15-79887299cfaf
+  #出现错误时, 直接抛出异常
+  mvc:
+    throw-exception-if-no-handler-found: true
+  #不要为我们工程中的资源文件建立映射[注:会导致swagger不能访问]
+  resources:
+    add-mappings: false

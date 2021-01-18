@@ -15,8 +15,8 @@ spring:
         file-extension: yaml
         # 共享配置
         shared-configs: [
-          {dataId: simple-all.yaml, group: DEV_ALL},
-          {dataId: simple-redis.yaml, group: DEV_REDIS}
+          { dataId: simple-all.yaml, group: DEV_ALL },
+          { dataId: simple-redis.yaml, group: DEV_REDIS }
         ]
       discovery:
         # 分组名称 (服务必须在相同分组才能被发现)
@@ -25,3 +25,9 @@ spring:
         server-addr: 127.0.0.1:8848
         # 对应命名空间id
         namespace: bd2b1035-c415-4518-8b15-79887299cfaf
+  #出现错误时, 直接抛出异常
+  mvc:
+    throw-exception-if-no-handler-found: true
+  #不要为我们工程中的资源文件建立映射[注:会导致swagger不能访问]
+  resources:
+    add-mappings: false
