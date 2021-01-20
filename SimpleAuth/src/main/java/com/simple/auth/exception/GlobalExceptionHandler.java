@@ -29,10 +29,12 @@ public class GlobalExceptionHandler {
     public Result<?> commonHandler(Exception ex) {
         // 判断异常类型
         if (ex instanceof MissingServletRequestParameterException) {
-            //访问参数异常
+            /* 访问参数异常 */
             LogUtil.error(GlobalExceptionHandler.class, "访问参数异常:{}", ExceptionUtils.getStackTrace(ex));
         } else if (ex instanceof NoHandlerFoundException) {
-            //404-没有可访问的资源
+            /* 404-没有可访问的资源
+            这里需要配置 spring.mvc.throw-exception-if-no-handler-found: true
+            和配置 spring.resources.add-mappings: false */
             LogUtil.error(GlobalExceptionHandler.class, "没有可访问的资源:{}", ExceptionUtils.getStackTrace(ex));
         } else {
             LogUtil.error(GlobalExceptionHandler.class, ExceptionUtils.getStackTrace(ex));
