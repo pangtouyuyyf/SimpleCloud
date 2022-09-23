@@ -185,6 +185,6 @@ public class RedisOperation {
      * @return
      */
     private String getKey(String nameSpace, String key) {
-        return nameSpace + SysParams.Common.COLON + key;
+        return nameSpace.concat(SysParams.Common.COLON).concat(key);
     }
 }
