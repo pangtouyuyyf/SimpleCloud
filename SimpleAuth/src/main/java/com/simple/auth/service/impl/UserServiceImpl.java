@@ -6,8 +6,11 @@ import com.simple.auth.dao.UserDao;
 import com.simple.auth.entity.User;
 import com.simple.auth.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 /**
@@ -16,6 +19,7 @@ import java.util.Map;
  * CreateTime 2020-04-20 22:09
  **/
 @Service
+@Validated
 public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
@@ -46,7 +50,7 @@ public class UserServiceImpl implements UserService {
      * @param userId
      * @return
      */
-    public User queryUser(Long userId) {
+    public User queryUser(@NotNull Long userId) {
         return userDao.queryUser(userId);
     }
 
@@ -57,7 +61,7 @@ public class UserServiceImpl implements UserService {
      * @param password
      * @return
      */
-    public User queryLoginUser(String loginName, String password) {
+    public User queryLoginUser(@NotBlank String loginName, @NotBlank String password) {
         return userDao.queryLoginUser(loginName, password);
     }
 

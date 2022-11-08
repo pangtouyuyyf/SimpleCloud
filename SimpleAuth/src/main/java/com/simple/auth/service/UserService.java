@@ -4,6 +4,8 @@ package com.simple.auth.service;
 import com.github.pagehelper.PageInfo;
 import com.simple.auth.entity.User;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 /**
@@ -35,7 +37,7 @@ public interface UserService {
      * @param userId
      * @return
      */
-    User queryUser(Long userId);
+    User queryUser(@NotNull Long userId);
 
     /**
      * 登录查询用户
@@ -44,7 +46,7 @@ public interface UserService {
      * @param password
      * @return
      */
-    User queryLoginUser(String loginName, String password);
+    User queryLoginUser(@NotBlank String loginName, @NotBlank String password);
 
     /**
      * 查询用户列表

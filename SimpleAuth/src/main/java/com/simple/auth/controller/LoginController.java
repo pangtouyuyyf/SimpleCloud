@@ -1,7 +1,7 @@
 package com.simple.auth.controller;
 
-import com.simple.access.entity.User;
 import com.simple.auth.client.BaseClient;
+import com.simple.auth.entity.User;
 import com.simple.auth.service.UserService;
 import com.simple.common.annotation.TokenAnnotation;
 import com.simple.common.config.SysParams;
@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Description 登录controller
@@ -45,12 +43,8 @@ public class LoginController extends BaseController {
             return this.fail("登录参数有误");
         }
 
-        Map<String, Object> params = new HashMap<>();
-        params.put("login_name", loginName);
-        params.put("password", password);
-
         //查询用户
-        User user = userService.queryUser(params);
+        User user = userService.queryLoginUser(loginName, password);
 
         if (user == null) {
             LogUtil.error(LoginController.class, LocalDateTime.now() + " 用户查询失败");
@@ -75,10 +69,10 @@ public class LoginController extends BaseController {
         }
 
         List<String> tokenKeyParts = Arrays.asList(SysParams.Redis.TOKEN_PREFIX,
-                Integer.toString(getLoginInfo().getCurrId()), channel);
+                Long.toString(getLoginInfo().getCurrId()), channel);
 
         List<String> loginInfoKeyParts = Arrays.asList(SysParams.Redis.LOGIN_INFO_PREFIX,
-                Integer.toString(getLoginInfo().getCurrId()), channel);
+                Long.toString(getLoginInfo().getCurrId()), channel);
 
         Result r;
         if (SysParams.Sys.IS_CLEAN_LOGIN_INFO) {
@@ -105,23 +99,23 @@ public class LoginController extends BaseController {
      */
     private Result loginOperate(User user, String channel) {
         //生成令牌
-        String token = JwtUtil.createJWT(Integer.toString(user.getId()), channel);
+        String token = JwtUtil.createJWT(Long.toString(user.getUserId()), channel);
 
         LoginInfo loginInfo = new LoginInfo();
-        loginInfo.setCurrId(user.getId());
+        loginInfo.setCurrId(user.getUserId());
         loginInfo.setChannel(channel);
 
         //生成令牌缓存主键
         List<String> tokenKeyParts = Arrays.asList(
-                SysParams.Redis.TOKEN_PREFIX, Integer.toString(user.getId()), channel);
+                SysParams.Redis.TOKEN_PREFIX, Long.toString(user.getUserId()), channel);
         String tokenRedisKey = String.join(SysParams.Common.UNDERLINE, tokenKeyParts);
 
         //生成个人信息缓存主键
         List<String> loginInfoKeyParts = Arrays.asList(
-                SysParams.Redis.LOGIN_INFO_PREFIX, Integer.toString(user.getId()), channel);
+                SysParams.Redis.LOGIN_INFO_PREFIX, Long.toString(user.getUserId()), channel);
         String loginInfoKey = String.join(SysParams.Common.UNDERLINE, loginInfoKeyParts);
 
-        Result r = null;
+        Result r;
         //保存登录信息缓存(令牌和个人信息)
         if (SysParams.Sys.CHANNEL_WEB.equals(channel)) {
             r = baseClient.saveLoginCache(tokenRedisKey, token, SysParams.Jwt.WEB_LIFE_CYCLE, loginInfoKey, loginInfo,
