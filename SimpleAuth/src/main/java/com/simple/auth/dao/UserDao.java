@@ -1,18 +1,19 @@
-package com.simple.auth.service;
+package com.simple.auth.dao;
 
-
-import com.github.pagehelper.PageInfo;
 import com.simple.auth.entity.User;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
- * Description 用户信息服务接口
+ * Description 用户数据操作dao
  * Author chen
- * CreateTime 2020-04-20 22:09
+ * CreateTime 2020-04-20 22:20
  **/
-
-public interface UserService {
+@Mapper
+public interface UserDao {
     /**
      * 检查数据是否存在
      *
@@ -35,7 +36,7 @@ public interface UserService {
      * @param userId
      * @return
      */
-    User queryUser(Long userId);
+    User queryUser(@Param("userId") Long userId);
 
     /**
      * 登录查询用户
@@ -44,17 +45,15 @@ public interface UserService {
      * @param password
      * @return
      */
-    User queryLoginUser(String loginName, String password);
+    User queryLoginUser(@Param("loginName") String loginName, @Param("password") String password);
 
     /**
      * 查询用户列表
      *
      * @param params
-     * @param page
-     * @param size
      * @return
      */
-    PageInfo queryUserList(Map<String, Object> params, int page, int size);
+    List<User> queryUserList(Map<String, Object> params);
 
     /**
      * 删除用户

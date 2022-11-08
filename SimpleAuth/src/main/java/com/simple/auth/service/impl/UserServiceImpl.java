@@ -51,6 +51,17 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 登录查询用户
+     *
+     * @param loginName
+     * @param password
+     * @return
+     */
+    public User queryLoginUser(String loginName, String password) {
+        return userDao.queryLoginUser(loginName, password);
+    }
+
+    /**
      * 查询用户列表
      *
      * @param params
