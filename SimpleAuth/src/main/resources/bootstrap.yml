@@ -4,13 +4,14 @@ spring:
     name: simple-auth
   cloud:
     nacos:
+      # 配置
       config:
-        # 分组名称
+        # 指定配置分组名称
         group: DEV_AUTH
         # nacos配置发现地址
-        server-addr: 127.0.0.1:8848
+        server-addr: 172.172.2.191:8848
         # 对应命名空间id
-        namespace: bd2b1035-c415-4518-8b15-79887299cfaf
+        namespace: 67056d3a-22f0-4aa9-a9a9-1e1de07007d1
         # 文件格式
         file-extension: yaml
         # 共享配置
@@ -18,13 +19,14 @@ spring:
           { dataId: simple-all.yaml, group: DEV_ALL },
           { dataId: simple-db.yaml, group: DEV_DB }
         ]
+      # 服务发现
       discovery:
         # 分组名称 (服务必须在相同分组才能被发现)
-        group: DEV_CLOUD
+        group: DEV_AUTH
         # nacos服务发现地址
-        server-addr: 127.0.0.1:8848
+        server-addr: 172.172.2.191:8848
         # 对应命名空间id
-        namespace: bd2b1035-c415-4518-8b15-79887299cfaf
+        namespace: 67056d3a-22f0-4aa9-a9a9-1e1de07007d1
   #出现错误时, 直接抛出异常
   mvc:
     throw-exception-if-no-handler-found: true
