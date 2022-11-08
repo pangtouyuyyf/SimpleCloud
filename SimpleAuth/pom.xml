@@ -50,15 +50,45 @@
             <version>${feign-okhttp.version}</version>
         </dependency>
 
+        <!-- mybatis -->
         <dependency>
-            <groupId>com.simple</groupId>
-            <artifactId>simple-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis-spring.version}</version>
+        </dependency>
+
+        <!-- druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+        <!-- postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- pagehelper -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>${pagehelper.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.simple</groupId>
-            <artifactId>simple-access</artifactId>
+            <artifactId>simple-common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

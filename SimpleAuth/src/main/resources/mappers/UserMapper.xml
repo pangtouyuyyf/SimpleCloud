@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.simple.auth.dao.UserDao">
+    <select id="checkUser" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(user_id)
+        from t_user
+        where delete_flag = '0'
+        <if test='userId != null'>
+            and user_id = #{userId,jdbcType=BIGINT}
+        </if>
+        <if test='userName != null and userName != ""'>
+            and user_name like concat('%',#{userName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test='loginName != null and loginName != ""'>
+            and login_name like concat('%',#{loginName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test='phone != null and phone != ""'>
+            and phone like concat('%',#{phone,jdbcType=VARCHAR},'%')
+        </if>
+        <if test='email != null and email != ""'>
+            and email like concat('%',#{email,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+
+    <insert id="mergeUser" parameterType="com.simple.auth.entity.User" useGeneratedKeys="false">
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test='userId != null'>
+                user_id,
+            </if>
+            <if test='userName != null and userName != ""'>
+                user_name,
+            </if>
+            <if test='loginName != null and loginName != ""'>
+                login_name,
+            </if>
+            <if test='password != null and password != ""'>
+                password,
+            </if>
+            <if test='phone != null and phone != ""'>
+                phone,
+            </if>
+            <if test='email != null and email != ""'>
+                email,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test='userId != null'>
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test='userName != null and userName != ""'>
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test='loginName != null and loginName != ""'>
+                #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test='password != null and password != ""'>
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test='phone != null and phone != ""'>
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test='email != null and email != ""'>
+                #{email,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        on conflict (user_id)
+        do update
+        <set>
+            <if test='userName != null and userName != ""'>
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test='loginName != null and loginName != ""'>
+                login_name = #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test='password != null and password != ""'>
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test='phone != null and phone != ""'>
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test='email != null and email != ""'>
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+        </set>
+    </insert>
+
+    <select id="queryUser" parameterType="java.lang.Long" resultType="com.simple.auth.entity.User">
+        select
+            user_id as userId,
+            user_name as userName,
+            login_name as loginName,
+            password,
+            phone,
+            email
+        from t_user
+        where delete_flag = '0' and user_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+    <select id="queryUserList" resultType="com.simple.auth.entity.User">
+        select
+        user_id as userId,
+        user_name as userName,
+        login_name as loginName,
+        password,
+        phone,
+        email
+        from t_user
+        where delete_flag = '0'
+        <if test='userName != null and userName != ""'>
+            and user_name like concat('%',#{userName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test='loginName != null and loginName != ""'>
+            and login_name like concat('%',#{loginName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test='phone != null and phone != ""'>
+            and phone like concat('%',#{phone,jdbcType=VARCHAR},'%')
+        </if>
+        <if test='email != null and email != ""'>
+            and email like concat('%',#{email,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+
+    <delete id="deleteUser" parameterType="java.util.Map">
+        update t_user set delete_flag = '1'
+        where delete_flag = '0'
+        <if test='userId != null'>
+            and user_id = #{userId,jdbcType=BIGINT}
+        </if>
+        <if test='userName != null and userName != ""'>
+            and user_name like concat('%',#{userName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test='loginName != null and loginName != ""'>
+            and login_name like concat('%',#{loginName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test='phone != null and phone != ""'>
+            and phone like concat('%',#{phone,jdbcType=VARCHAR},'%')
+        </if>
+        <if test='email != null and email != ""'>
+            and email like concat('%',#{email,jdbcType=VARCHAR},'%')
+        </if>
+    </delete>
+</mapper>
