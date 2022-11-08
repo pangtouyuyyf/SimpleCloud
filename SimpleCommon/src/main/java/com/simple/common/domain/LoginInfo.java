@@ -17,7 +17,7 @@ public class LoginInfo implements Serializable {
 
     private static final long serialVersionUID = 6900813419624163289L;
 
-    private int currId;  //当前用户id
+    private Long currId;  //当前用户id
 
     private String channel;  //登录渠道(web/app)
 
