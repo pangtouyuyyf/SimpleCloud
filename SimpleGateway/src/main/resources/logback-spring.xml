@@ -3,7 +3,7 @@
     <!-- 项目名称 -->
     <springProperty name="PROJECT_NAME" source="spring.application.name"/>
     <!-- elk地址 -->
-    <property name="ELK_URL" value="localhost:9600"/>
+    <!--<property name="ELK_URL" value="localhost:9600"/>-->
     <!-- 日志级别 -->
     <springProperty name="LOGGER_LEVEL" source="log.level"/>
 
@@ -84,29 +84,29 @@
     </appender>
 
     <!-- 为logstash输出的JSON格式的Appender -->
-    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashAccessTcpSocketAppender">
-        <destination>${ELK_URL}</destination>
-        <!-- 日志输出编码 -->
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <pattern>
-                    <pattern>
-                        {
-                        "severity": "%level",
-                        "service": "${PROJECT_NAME:-}",
-                        "trace": "%X{X-B3-TraceId:-}",
-                        "span": "%X{X-B3-SpanId:-}",
-                        "exportable": "%X{X-Span-Export:-}",
-                        "pid": "${PID:-}",
-                        "thread": "%thread",
-                        "class": "%logger{40}",
-                        "msg": "%message"
-                        }
-                    </pattern>
-                </pattern>
-            </providers>
-        </encoder>
-    </appender>
+    <!--<appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashAccessTcpSocketAppender">-->
+        <!--<destination>${ELK_URL}</destination>-->
+        <!--&lt;!&ndash; 日志输出编码 &ndash;&gt;-->
+        <!--<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">-->
+            <!--<providers>-->
+                <!--<pattern>-->
+                    <!--<pattern>-->
+                        <!--{-->
+                        <!--"severity": "%level",-->
+                        <!--"service": "${PROJECT_NAME:-}",-->
+                        <!--"trace": "%X{X-B3-TraceId:-}",-->
+                        <!--"span": "%X{X-B3-SpanId:-}",-->
+                        <!--"exportable": "%X{X-Span-Export:-}",-->
+                        <!--"pid": "${PID:-}",-->
+                        <!--"thread": "%thread",-->
+                        <!--"class": "%logger{40}",-->
+                        <!--"msg": "%message"-->
+                        <!--}-->
+                    <!--</pattern>-->
+                <!--</pattern>-->
+            <!--</providers>-->
+        <!--</encoder>-->
+    <!--</appender>-->
 
     <!-- 指定输出 -->
     <logger name="org.springframework" level="info" additivity="false">
@@ -121,7 +121,7 @@
         <appender-ref ref="INFO"/>
         <appender-ref ref="WARN"/>
         <appender-ref ref="ERROR"/>
-        <appender-ref ref="LOGSTASH"/>
+        <!--<appender-ref ref="LOGSTASH"/>-->
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
