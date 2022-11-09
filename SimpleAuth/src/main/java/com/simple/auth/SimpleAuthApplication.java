@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableFeignClients
 @SpringBootApplication
-@MapperScan(basePackages = "com.simple.auth")
+@MapperScan(basePackages = {"com.simple.auth.dao"})
 public class SimpleAuthApplication {
 
     public static void main(String[] args) {
