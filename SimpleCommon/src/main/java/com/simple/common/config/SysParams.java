@@ -117,7 +117,7 @@ public class SysParams {
         /* 开启自动令牌续权 */
         public static final boolean ENABLE_RENEW = true;
 
-        /* 开启令牌反劫持 */
+        /* 开启令牌反劫持,关闭之后单用户可以同时登录 */
         public static final boolean ANTI_HIJACK = true;
     }
 
