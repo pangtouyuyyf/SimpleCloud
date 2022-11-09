@@ -22,7 +22,7 @@ spring:
       # 服务发现
       discovery:
         # 分组名称 (服务必须在相同分组才能被发现)
-        group: DEV_AUTH
+        group: CLOUD_DEV
         # nacos服务发现地址
         server-addr: 172.172.2.191:8848
         # 对应命名空间id
