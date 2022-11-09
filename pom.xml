@@ -24,7 +24,7 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.9.RELEASE</spring-cloud-alibaba.version>
-        <feign-okhttp.version>11.10</feign-okhttp.version>
+        <feign-okhttp.version>11.0</feign-okhttp.version>
         <lombok.version>1.18.24</lombok.version>
         <slf4j.version>1.7.30</slf4j.version>
         <commons-lang3.version>3.11</commons-lang3.version>
