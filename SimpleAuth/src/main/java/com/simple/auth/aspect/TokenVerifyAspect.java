@@ -8,6 +8,7 @@ import com.simple.common.enums.SysExpEnum;
 import com.simple.common.holder.RequestLoginContextHolder;
 import com.simple.common.util.JwtUtil;
 import com.simple.common.util.LogUtil;
+import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
@@ -74,6 +75,11 @@ public class TokenVerifyAspect {
         String userId = jwtMap.get(SysParams.Sys.USER_ID);
         String channel = jwtMap.get(SysParams.Sys.CHANNEL);
 
+        if(StringUtils.isBlank(userId) || StringUtils.isBlank(channel)){
+            LogUtil.error(TokenVerifyAspect.class, LocalDateTime.now() + " 令牌验证失败");
+            return Result.error(SysExpEnum.NEED_LOGIN);
+        }
+
         /** 生成个人信息缓存主键 **/
         List<String> loginInfoKeyParts = Arrays.asList(
                 SysParams.Redis.LOGIN_INFO_PREFIX, userId, channel);
@@ -85,9 +91,8 @@ public class TokenVerifyAspect {
             LogUtil.error(TokenVerifyAspect.class, LocalDateTime.now() + " 没有登录信息缓存");
             return Result.error(SysExpEnum.NO_LOGIN_INFO);
         }
-        LoginInfo loginInfo = r.getData();
 
-        RequestLoginContextHolder.setRequestLoginInfo(loginInfo);
+        RequestLoginContextHolder.setRequestLoginInfo(r.getData());
 
         /** 执行目标 **/
         return joinPoint.proceed();
