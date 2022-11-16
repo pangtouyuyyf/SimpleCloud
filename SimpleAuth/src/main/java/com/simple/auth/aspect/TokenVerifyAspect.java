@@ -8,7 +8,6 @@ import com.simple.common.enums.SysExpEnum;
 import com.simple.common.holder.RequestLoginContextHolder;
 import com.simple.common.util.JwtUtil;
 import com.simple.common.util.LogUtil;
-import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
