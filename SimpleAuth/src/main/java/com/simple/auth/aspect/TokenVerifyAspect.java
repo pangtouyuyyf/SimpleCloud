@@ -75,11 +75,6 @@ public class TokenVerifyAspect {
         String userId = jwtMap.get(SysParams.Sys.USER_ID);
         String channel = jwtMap.get(SysParams.Sys.CHANNEL);
 
-        if(StringUtils.isBlank(userId) || StringUtils.isBlank(channel)){
-            LogUtil.error(TokenVerifyAspect.class, LocalDateTime.now() + " 令牌验证失败");
-            return Result.error(SysExpEnum.NEED_LOGIN);
-        }
-
         /** 生成个人信息缓存主键 **/
         List<String> loginInfoKeyParts = Arrays.asList(
                 SysParams.Redis.LOGIN_INFO_PREFIX, userId, channel);
