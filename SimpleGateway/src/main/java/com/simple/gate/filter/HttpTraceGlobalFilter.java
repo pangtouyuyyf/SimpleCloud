@@ -63,14 +63,13 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
         String channel = jwtMap.get(SysParams.Sys.CHANNEL);
 
         /* 验证令牌参数 */
-        if (!StringUtils.isNoneEmpty(userId)
-                || !StringUtils.isNoneEmpty(channel)
-                || !(SysParams.Sys.CHANNEL_WEB.equals(channel) || SysParams.Sys.CHANNEL_APP.equals(channel))) {
+        if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(channel)
+                || !SysParams.Sys.CHANNEL_WEB.equals(channel) || !SysParams.Sys.CHANNEL_APP.equals(channel)) {
             LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌参数有误");
             return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.NEED_LOGIN)));
         }
 
-        Result r = null;
+        Result r;
 
         /* 获取服务器缓存令牌 */
         List<String> tokenKeyParts = Arrays.asList(SysParams.Redis.TOKEN_PREFIX, userId, channel);
@@ -118,6 +117,8 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
                 return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.CONNECT_OR_OVERTIME_ERROR)));
             }
         }
+
+        /* 用户访问权限验证 */
 
         return chain.filter(exchange);
     }
