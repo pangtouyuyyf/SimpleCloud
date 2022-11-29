@@ -64,7 +64,7 @@ public class HttpTraceGlobalFilter implements GlobalFilter, Ordered {
 
         /* 验证令牌参数 */
         if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(channel)
-                || !SysParams.Sys.CHANNEL_WEB.equals(channel) || !SysParams.Sys.CHANNEL_APP.equals(channel)) {
+                || !(SysParams.Sys.CHANNEL_WEB.equals(channel) || SysParams.Sys.CHANNEL_APP.equals(channel))) {
             LogUtil.error(HttpTraceGlobalFilter.class, LocalDateTime.now() + " 令牌参数有误");
             return response.writeWith(Mono.just(handleResponse(response, SysExpEnum.NEED_LOGIN)));
         }
