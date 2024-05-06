@@ -7,7 +7,7 @@ import java.lang.annotation.*;
  * Author chen
  * CreateTime 2020-04-27 20:33
  **/
-@Target({ElementType.PARAMETER, ElementType.METHOD})
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface TokenAnnotation {
